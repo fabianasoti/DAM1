@@ -70,7 +70,6 @@ Igual no se recomienda. Hay que dejar que la base de datos controle los id. Esa 
 20260001
 
 
----
 Próxima clase: Validaciones para que la base de datos pueda decir que el correo es incorrecto, por ejemplo.
 INSERT INTO clientes
 VALUES(
@@ -90,4 +89,6 @@ mysql> SELECT * FROM clientes;
 |             3 | 14567895A | Susana Banana    | Perez     | correoincorrecto    |
 +---------------+-----------+------------------+-----------+---------------------+
 
+mysql> EXIT;
+Bye
 
