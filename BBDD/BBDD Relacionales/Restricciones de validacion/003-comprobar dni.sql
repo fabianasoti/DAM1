@@ -30,4 +30,8 @@ ALTER TABLE clientes
                 1)
     )
   );
+  
+  ERROR 3819 (HY000): Check constraint 'comprobar_dni_nie_letra' is violated.
+ 
+
 
