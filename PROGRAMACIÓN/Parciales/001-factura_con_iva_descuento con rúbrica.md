@@ -103,6 +103,9 @@ print("_________________________________")
 ---
 
 Para finalizar, con el código que se ha construido, se ha podido aplicar de manera práctica y utilizable en la vida cotidiana, todos los conocimientos adquiridos en la introducción a la asignatura de programación.
+
 Al aplicar y definir bien los tipos de datos, se puede generar una factura calculando su IVA y posibles descuentos aplicables. Y se ha hecho usa de condicionales (if) y de operaciones booleanas (>=) para poder definir en qué casos era aplicable el descuento.
+
 Solicitar (input()) y mostrar (print()) la información en pantalla es lo que nos permite interactuar con el usuario y mejorar su experiencia, lo que es un paso pequeño pero significativo en el proceso de crear una aplicación.
+
 Se ha podido demostrar lo importante que es comprender los elementos básicos del código de un programa para así poder construir códigos más complejos en el futuro.
