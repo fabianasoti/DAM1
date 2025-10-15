@@ -19,3 +19,14 @@ ALTER TABLE clientes
 
 Query OK, 2 rows affected (0,09 sec)
 Records: 2  Duplicates: 0  Warnings: 0
+
+INSERT INTO clientes VALUES(
+	NULL,
+	'12345678M',
+	'nombre del cliente',
+	'apellidos del cliente',
+	'algo'
+);
+
+ERROR 3819 (HY000): Check constraint 'comprobar_email' is violated.
+

@@ -60,5 +60,18 @@ INSERT INTO clientes VALUES(
 	'apellidos del cliente',
 	'algo'
 );
+Query OK, 1 row affected (0,04 sec)
+
+
+SELECT * FROM clientes;
++---------------+-----------+--------------------+-----------------------+---------------------+
+| identificador | dni       | nombre             | apellidos             | email               |
++---------------+-----------+--------------------+-----------------------+---------------------+
+|             1 | 12345678M | Fabiana Victoria   | Sotillo               | fabiana@sotillo.com |
+|             2 | 14567895A | Susana Banana      | Perez                 | susana@perez.com    |
+|             3 | 14567895A | Susana Banana      | Perez                 | correoincorrecto    |
+|             4 | 12345678M | nombre del cliente | apellidos del cliente | algo                |
++---------------+-----------+--------------------+-----------------------+---------------------+
+4 rows in set (0,00 sec)
 
 
