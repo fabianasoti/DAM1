@@ -3,12 +3,14 @@
 # Flask es un microservidorweb que nos permite generar HTML desde Python
 
 from flask import Flask
+import json
 
 aplicacion = Flask(__name__)
 
 @aplicacion.route("/")
 def raiz():
-    return '''
+##################################### Este es un bloque
+    cadena = '''
     <¡doctype html>
 <html lang="es">
   <head>
@@ -24,18 +26,28 @@ def raiz():
   <body>
     <header><h1>FABIANAblog</h1></header>
     <main>
-      <article>
-        <h3>Título del artículo</h3>
-        <time>2025-10-16</time>
-        <p>Fabiana Victoria Sotillo</p>
-        <p>Este es el contenido de un artículo ficticio</p>
-      </article>
+    '''
+    #################################### Otro bloque que se repite
+    archivo = open("blog.json", 'r')
+    contenido = json.load(archivo)
+    for linea in contenido:
+        cadena += '''
+          <article>
+            <h3>'''+linea['titulo']+'''</h3>
+            <time>'''+linea['fecha']+'''</time>
+            <p>'''+linea['autor']+'''</p>
+            <p>'''+linea['contenido']+'''</p>
+          </article>
+          '''
+     ######################################### Otro bloque más
+    cadena += '''
     </main>
     <footer>(c)2025 Fabiana Victoria Sotillo</footer>
   </body>
 </html>
     '''
-    
+    ##################################### NO OLVIDAR RETURN
+    return cadena
 # Ahora arranco el servidor
 if __name__== "__main__":
     aplicacion.run(debug="True")
