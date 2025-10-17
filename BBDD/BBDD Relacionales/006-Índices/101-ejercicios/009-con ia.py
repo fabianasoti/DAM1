@@ -36,7 +36,7 @@ def clear_screen():
 def print_header():
     clear_screen()
     print(f"{BOLD}{MAGENTA}==============================")
-    print(f"     AGENDA SQLite v1.0")
+    print(f"     AGENDA SQLite v1.1")
     print(f"     By Fabiana Victoria Sotillo")
     print(f"=============================={RESET}\n")
 
@@ -46,15 +46,17 @@ def show_menu():
     print(f"{YELLOW}2.{RESET} Listar clientes")
     print(f"{YELLOW}3.{RESET} Actualizar cliente")
     print(f"{YELLOW}4.{RESET} Eliminar cliente")
-    print(f"{YELLOW}5.{RESET} Salir del programa\n")
+    print(f"{YELLOW}5.{RESET} Salir del programa")
+    print(f"{YELLOW}6.{RESET} Buscar cliente\n")
 
 def pause():
     input(f"\n{CYAN}Presiona Enter para continuar...{RESET}")
 
-def mostrar_clientes():
+def mostrar_clientes(filas=None):
     """Muestra la tabla de clientes con formato."""
-    cursor.execute("SELECT * FROM clientes;")
-    filas = cursor.fetchall()
+    if filas is None:
+        cursor.execute("SELECT * FROM clientes;")
+        filas = cursor.fetchall()
 
     if not filas:
         print(f"{YELLOW}No hay clientes registrados.{RESET}")
@@ -103,7 +105,7 @@ while True:
 
     elif opcion == 3:
         print(f"\n{BOLD}{CYAN}=== Actualizar cliente ==={RESET}")
-        mostrar_clientes()  # 👈 Show list before updating
+        mostrar_clientes()
 
         identificador = input("\nIntroduce el Identificador del cliente a actualizar: ")
         cursor.execute("SELECT * FROM clientes WHERE Identificador = ?", (identificador,))
@@ -128,7 +130,7 @@ while True:
 
     elif opcion == 4:
         print(f"\n{BOLD}{CYAN}=== Eliminar cliente ==={RESET}")
-        mostrar_clientes()  # 👈 Show list before deleting
+        mostrar_clientes()
 
         identificador = input("\nIntroduce el Identificador del cliente a eliminar: ")
 
@@ -152,9 +154,37 @@ while True:
         print(f"{GREEN}Bye bye 👋{RESET}")
         break
 
+    elif opcion == 6:
+        print(f"\n{BOLD}{CYAN}=== Buscar cliente ==={RESET}")
+        criterio = input("Introduce nombre, email o ID a buscar: ").strip()
+
+        if not criterio:
+            print(f"{RED}Debes introducir algo para buscar.{RESET}")
+        else:
+            # Try to interpret as ID first
+            if criterio.isdigit():
+                cursor.execute("SELECT * FROM clientes WHERE Identificador = ?", (criterio,))
+                filas = cursor.fetchall()
+            else:
+                like_pattern = f"%{criterio}%"
+                cursor.execute("""
+                    SELECT * FROM clientes
+                    WHERE nombre LIKE ? OR apellidos LIKE ? OR email LIKE ?
+                """, (like_pattern, like_pattern, like_pattern))
+                filas = cursor.fetchall()
+
+            if filas:
+                print(f"{GREEN}\nResultados de la búsqueda:{RESET}")
+                mostrar_clientes(filas)
+            else:
+                print(f"{YELLOW}No se encontraron resultados para '{criterio}'.{RESET}")
+
+        pause()
+
     else:
         print(f"{RED}Opción no válida.{RESET}")
         pause()
 
 conexion.close()
+
 
