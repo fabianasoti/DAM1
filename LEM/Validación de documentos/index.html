@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <title>Fabiana Victoria Sotillo</title>
+    <meta charset="utf-8">
+    <!-- Etiquetas de posicionamiento -->
+    <meta name="description" content="Web de Fabiana Victoria Sotillo Cuevas, estudiante de DAM, crochetera en su tiempo libre">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="keywords" content="programación,desarrollo,clave3,...">
+      <meta name="author" content="Fabiana Victoria Sotillo">
+      <link rel="icon" href="kermit cute.jpeg" type="image/jpeg">
+      <meta property="og:title" content="Fabiana Victoria Sotillo">
+      <meta property="og:description" content="Web de Fabiana Victoria Sotillo Cuevas, estudiante de DAM, crochetera en su tiempo libre">
+      <meta property="og:image" content="kermit cute.jpeg">
+      <meta property="og:url" content="https://fabianasotillo.com">
+      <meta property="og:type" content="website">
+      <style>
+        /*
+            @font-face{
+            font-family: "ubuntu";
+            src:url("https://static.jocarsa.com/fuentes/ubuntu-font-family-0.83/Ubuntu-R.ttf");
+        */
+        @font-face{
+            font-family: "ubuntu";
+            src:url("BebasNeue-Regular.otf");
+        }
+        h1{
+          color:MediumSlateBlue;
+          font-family: "ubuntu";
+          src:url("BebasNeue-Regular.otf");
+        }
+        h2,h3{
+          color:MediumSlateBlue;
+          font-family:monospace;
+        }
+        body{
+          background:Lavender;
+        }
+        header,main,footer{
+          width:750px; /* Establece el fondo de los elementos */
+          background:white; /* Establece el fondo de los elementos */
+          margin:auto; /* Centralo en la pantalla */
+          padding:20px; /* Pon un poco de margen interior */
+        }
+        nav ul{
+          list-style-type:none; /* Anula estilos de lista*/
+          margin:0px; /* anula el margen exterior por defecto*/
+          padding:0px; /* anula el margen interior por defecto*/
+          display:flex; /* Activa flex de izquierda a derecha */
+          gap:10px; /* Distancia entre los elementos de flexbox o grid */
+          justify-content: center; /* Centrar los elementos del menú */
+        }
+        nav ul li a{
+          text-decoration:none;     /* anula los estilos de subrayado */
+          color:inherit;            /* Le pone el color que debería tener */ 
+          color:MediumSlateBlue;    /* Fuerzo el color */
+          background:Lavender;      /* El fondo es de un color sólido */
+          padding:5px;              /* Le pongo margen interior */
+          font-size:10px;           /* Le pongo tamaño de letra */
+          text-transform:uppercase; /* Texto va en mayúsculas */
+          display:block;            /* Permito a los elementos que sean bloques */
+          width:60px;               /* Su anchura es de 60 píxeles */
+          text-align:center;        /* Alineo el texto al centro */
+        }
+        #inicio img{
+          width:100;        /* No quiero que la imagen se salga */
+        }
+        .bloque{
+          display:flex; /* El bloque de texto e imagen quiero que sea flex */
+          gap:20px; /* Distancia entre los elementos*/
+        }
+        .bloque img{
+          flex:1; /* Ocupa una unidad flex */
+          width:50%; /* Ocupa el 50% de la anchura */
+          height:50%; /* Ocupa el 50% de la altura */
+        }
+        .bloque p{
+          flex:1; /* Ocupa una unidad flex */
+          font-size:10px; /* Edito el tamaño del texto */
+          text-align:justify; /* Edito la alineación del texto*/
+        }
+        #diseño .bloque{
+          flex-direction: row-reverse; /* Invertimos el orden  un elemento*/
+        }
+        #contenedor_portafolio{
+          display:grid;   /* Este elemento es una rejilla*/
+          grid-template-columns:auto auto auto; /* Y tiene tres columnas */
+          gap:20px; /* Separación entre los elementos */
+        }
+        #contenedor_portafolio{
+          width:100%; /* Quiero que la imagen no desborde */
+        }
+        form{
+          display:flex; /* Quiero que el formulario sea flex */
+          flex-direction:column; /* Y quiero que sea columna */
+          flex:1; /* Tiene 1 unidad flex */
+          gap:10px;
+        }
+      </style>
+  </head>
+  <body>
+    <header>
+      <!-- Esto es la cabecera de la página -->
+      <h1>Fabiana Victoria Sotillo</h1>
+      <h2>Estudiante de DAM</h2>
+      <nav>
+        <ul>
+          <li><a href=#inicio>Inicio</a></li>
+          <li><a href=#sobremi>Sobre mi</a></li>
+          <li><a href=#crochet>Crochet</a></li>
+          <li><a href=#diseño>Diseño</a></li>
+          <li><a href=#portafolio>Portafolio</a></li>
+          <li><a href=#contacto>Contacto</a></li>
+        </ul>
+      </nav>
+    </header>
+    <main>
+      <!-- Esto es contenido principal -->
+      <section id="inicio">
+        <h3>Inicio</h3>
+        <img src="kermit cute.jpeg" alt="Lovely Kermit The Frog">
+      </section>
+      <section id="sobremi">
+        <h3>Sobre mí</h3>
+        <p> Soy Fabiana Sotillo, estudiante de DAM. Aspiro a dedicarme el mundo de las bases de datos, analizarlas y desarrollarlas. En mi tiempo libre hago crochet, es relajante y me ayuda a identificar patrones. Me gusta jugar juegos de mesa y leer sobre ciencia, neurociencia y veo al Robotitus en youtube, un canal de divulgación científica</p>
+      </section>
+      <section id="crochet">
+        <h3>Crochet</h3> 
+          <div class="bloque">
+            <img src="kermit cute.jpeg" alt="Lovely Kermit The Frog">
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+          </div>
+      </section>
+      <section id="diseño">
+        <h3>Diseños y Programas</h3>
+         <div class="bloque">
+          <img src="kermit cute.jpeg" alt="Lovely Kermit The Frog">
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+         </div>
+      </section>
+      <section id="portafolio">
+        <h3>Portafolio</h3>
+        <div id="contenedor_portafolio">
+          <article>
+            <h4>Elemento de portafolio</h4>
+            <p>Descripción del elemento</p>
+            <img src="kermit cute.jpeg" alt="Lovely Kermit The Frog">
+          </article>
+           <article>
+            <h4>Elemento de portafolio</h4>
+            <p>Descripción del elemento</p>
+            <img src="kermit cute.jpeg" alt="Lovely Kermit The Frog">
+          </article>
+           <article>
+            <h4>Elemento de portafolio</h4>
+            <p>Descripción del elemento</p>
+            <img src="kermit cute.jpeg" alt="Lovely Kermit The Frog">
+          </article>
+          <article>
+            <h4>Elemento de portafolio</h4>
+            <p>Descripción del elemento</p>
+            <img src="kermit cute.jpeg" alt="Lovely Kermit The Frog">
+          </article>
+          <article>
+            <h4>Elemento de portafolio</h4>
+            <p>Descripción del elemento</p>
+            <img src="kermit cute.jpeg" alt="Lovely Kermit The Frog">
+          </article>
+          <article>
+            <h4>Elemento de portafolio</h4>
+            <p>Descripción del elemento</p>
+            <img src="kermit cute.jpeg" alt="Lovely Kermit The Frog">
+          </article>
+          <article>
+            <h4>Elemento de portafolio</h4>
+            <p>Descripción del elemento</p>
+            <img src="kermit cute.jpeg" alt="Lovely Kermit The Frog">
+          </article>
+          <article>
+            <h4>Elemento de portafolio</h4>
+            <p>Descripción del elemento</p>
+            <img src="kermit cute.jpeg" alt="Lovely Kermit The Frog">
+          </article>
+          <article>
+            <h4>Elemento de portafolio</h4>
+            <p>Descripción del elemento</p>
+            <img src="kermit cute.jpeg" alt="Lovely Kermit The Frog">
+          </article>
+        </div>
+      </section>
+      <section id="contacto">
+        <h3>Contacto</h3>
+        <div class=bloque>
+        <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d6157.641601096457!2d-0.4026485735648506!3d39.495960839554776!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1ses!2ses!4v1759912115668!5m2!1ses!2ses" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        <form>
+          <label for="nombre">Introduce tu nombre</label>
+          <input type="text" id="nombre">
+          <label for="email">Introduce tu email</label>
+          <input type="text" id="email">
+          <label for="teléfono">Introduce tu número de teléfono</label>
+          <input type="text" id="telefono">
+          <label for="mensaje">Introduce tu mensaje</label>
+          <textarea id="mensaje"></textarea>
+          <input type="submit">
+        </form>
+        </div>
+      </section>
+    <footer>
+      <!-- Esto es el pie de página -->
+      <a href="https://instagram.com/fabiaganchillo">Instagram</a>
+      <a href="https://github.com/fabianasoti">Github</a>
+    </footer>
+  </body>
+</html>
