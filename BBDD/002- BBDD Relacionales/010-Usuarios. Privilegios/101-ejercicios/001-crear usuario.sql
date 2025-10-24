@@ -16,7 +16,7 @@ MAX_CONNECTIONS_PER_HOUR 0
 MAX_USER_CONNECTIONS 0;
 
 -- dale acceso a la base de datos empresadam
-GRANT ALL PRIVILEGES ON 'empresadam',*
+GRANT ALL PRIVILEGES ON empresadam.*
 TO 'susana'@'localhost';
 
 -- recarga la tabla de privilegios
