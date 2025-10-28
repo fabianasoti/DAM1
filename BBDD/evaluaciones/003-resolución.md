@@ -1,6 +1,6 @@
 En las bases de datos relacionales, es necesario realizar acciones básicas que permitan almacenar, organizar y administrar información de manera estructurada mediante tablas compuestas por filas y columnas. Esto funciona bajo un modelo cliente-servidor y utiliza SQL (Structured Query Language) para interactuar con los datos.
 
-El objetivo de este ejercicio es practicar la aplicación del CRUD la creación y selección de una base de datos y la práctica de operaciones fundamentales de manipulación de datos, conocidas como CRUD (Create, Read, Update, Delete). Mediante la creación de la tabla clientes, la inserción, lectura, actualización y eliminación de registros, se busca comprender cómo se gestionan los datos de manera eficiente y cómo se aplican los conceptos de tipos de datos y restricciones en un entorno relacional.
+El objetivo de este ejercicio es practicar la aplicación del CRUD; la creación y selección de una base de datos y la práctica de operaciones fundamentales de manipulación de datos, conocidas como CRUD (Create, Read, Update, Delete). Mediante la creación de la tabla clientes, la inserción, lectura, actualización y eliminación de registros, se busca comprender cómo se gestionan los datos de manera eficiente y cómo se aplican los conceptos de tipos de datos y restricciones en un entorno relacional.
 
 
 - Inicialmente se selecciona la base de datos con la que se quiere trabajar:
@@ -24,7 +24,7 @@ mysql> USE funbiana;
 Database changed
 ```
 
-- Una vez dentro, se crea la tabla clientes definiendo el tipo de campo de cada uno:
+- Una vez dentro, se crea la tabla clientes definiendo el tipo de campo de cada uno, de esta manera, aplicamos la C  (Create) del CRUD, Creando una nueva tabla:
 ```
 mysql> CREATE TABLE clientes (
     ->   dni VARCHAR(9),
@@ -35,7 +35,7 @@ mysql> CREATE TABLE clientes (
 Query OK, 0 rows affected (0,04 sec)
 ```
 
-- Se inserta un cliente siguiendo la plantilla de la tabla anterior, de esta manera, aplicamos la C  (Create) del CRUD, Creando una instancia dentro de una tabla:
+- Se inserta un cliente siguiendo la plantilla de la tabla anterior.
 ```
 mysql> INSERT INTO clientes VALUES(
     ->   '12345678Z',
@@ -91,7 +91,7 @@ Empty set (0,00 sec)
 ```
 
 
-A continuación, se ejemplifica la actividad en consola, en el siguiente bloque:
+A continuación, en el siguiente bloque, se muestra la actividad en consola:
 ```
 mysql> SHOW DATABASES;
 +--------------------+
