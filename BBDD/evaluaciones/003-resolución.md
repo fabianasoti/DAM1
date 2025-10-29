@@ -172,3 +172,4 @@ Empty set (0,00 sec)
 Este ejercicio permitió practicar y comprender las operaciones fundamentales del CRUD (Create, Read, Update, Delete) en una base de datos relacional utilizando MySQL. A través de la creación de la tabla clientes, se ha practicado la inserción, lectura, actualización y eliminación de datos, además de haberse evidenciado cómo se manipula la información de manera estructurada y segura.
 
 La práctica consolida la comprensión sobre la importancia de definir correctamente los tipos de datos y cómo cada operación CRUD afecta la tabla, evidenciando cada uno de sus cambios, asegurando integridad y consistencia de los datos. Además, proporcionó experiencia práctica en el uso de comandos SQL esenciales, sentando una base sólida para desarrollar aplicaciones que requieran gestión dinámica de información.
+

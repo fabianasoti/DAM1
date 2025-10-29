@@ -1,18 +1,4 @@
-sudo mysql -u root -p
-[sudo] contraseña para fabiana: 
-Enter password: 
-Welcome to the MySQL monitor.  Commands end with ; or \g.
-Your MySQL connection id is 9
-Server version: 8.0.43-0ubuntu0.24.04.2 (Ubuntu)
-
-Copyright (c) 2000, 2025, Oracle and/or its affiliates.
-
-Oracle is a registered trademark of Oracle Corporation and/or its
-affiliates. Other names may be trademarks of their respective
-owners.
-
-Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
-
+```
 mysql> SHOW DATABASES;
 +--------------------+
 | Database           |
@@ -89,4 +75,5 @@ Query OK, 1 row affected (0,02 sec)
 
 mysql> SELECT * FROM clientes;
 Empty set (0,00 sec)
+```
 
