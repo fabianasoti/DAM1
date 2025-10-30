@@ -1,11 +1,29 @@
-Motor de bases de datos (MySQL)
-
-Base de datos
-Tablas -Columnas -Registros,filas,tuplas -Claves primarias (propias de la tabla) -Claves externas / foráneas (relacionan con otras tablas) -Restricciones
-Tablas -Columnas -Registros,filas,tuplas -Claves primarias (propias de la tabla) -Claves externas / foráneas (relacionan con otras tablas) -Restricciones
-Tablas -Columnas -Registros,filas,tuplas -Claves primarias (propias de la tabla) -Claves externas / foráneas (relacionan con otras tablas) -Restricciones
-Base de datos
-Tablas -Columnas -Registros,filas,tuplas -Claves primarias (propias de la tabla) -Claves externas / foráneas (relacionan con otras tablas) -Restricciones
-Tablas -Columnas -Registros,filas,tuplas -Claves primarias (propias de la tabla) -Claves externas / foráneas (relacionan con otras tablas) -Restricciones
-Tablas -Columnas -Registros,filas,tuplas -Claves primarias (propias de la tabla) -Claves externas / foráneas (relacionan con otras tablas) -Restricciones
-
+Motor de Bases de Datos (MySQL)
+    - BBDD
+        - Tablas
+             - Columnas
+             - Registros, filas, tuplas
+             - Claves primarias
+             - Claves externas o foráneas (relacionan con otras tablas)
+             - Restricciones
+    (Esto puede repetirse tantas veces como sea necesario. EJ:)
+        - Tablas
+             - Columnas
+             - Registros, filas, tuplas
+             - Claves primarias
+             - Claves externas o foráneas (relacionan con otras tablas)
+             - Restricciones
+        - Tablas
+             - Columnas
+             - Registros, filas, tuplas
+             - Claves primarias
+             - Claves externas o foráneas (relacionan con otras tablas)
+             - Restricciones
+    - BBDD
+        - Tablas
+             - Columnas
+             - Registros, filas, tuplas
+             - Claves primarias
+             - Claves externas o foráneas (relacionan con otras tablas)
+             - Restricciones
+    

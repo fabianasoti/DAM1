@@ -1,6 +1,4 @@
-USE empresadam;
-
-Database changed
-
-
-Con este comando, entramos efectivamente en la base de datos
+INT = Número entero
+VARCHAR = Cadena de texto
+TEXT = Texto largo
+DATE = Fecha

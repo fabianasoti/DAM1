@@ -1,15 +1,7 @@
-En la máquina virtual:
+Abrimos terminal:
 
-Control +  Alt + P: Abrir un terminal
+sudo mysql -u root -p
 
-sudo apt install mysql-server
+sudo = el superusuario va a hacer algo mysql = ejecutamos mysql -u = quiero entrar con un usuario root = el nombre del usuario con el cual quiero entrar -p = y pídeme la contraseña
 
-sudo = super user do = el superusuario va a hacer algo
-apt = gestor depaquetes de Debian Linux
-install = operación de instalar
-mysql-server = el paquete a instalar
-
-Una vez que lo tenéis, aseguramos la instalación:
-
-Ejecutad:
-mysql_secure_installation
+Si no recordáis cuál el vuestro nombre de usuario: whoami

@@ -2,7 +2,7 @@ DELETE FROM clientes; -- Esto se lo carga todo
 Query OK, 2 rows affected (0,02 sec)
 
 
-SELECT * FROM clientes;
+SELECT * FROM clientes; -- Compruebo que no hay nada
 Empty set (0,00 sec)
 
 

@@ -1,4 +1,9 @@
-Terminal:
-Control + Alt + T
+SHOW DATABASES;
 
-sudo mysql -u root -p
+USE empresadam;
+
+SHOW TABLES;
+
+SELECT * FROM clientes;
+
+DESCRIBE clientes;
