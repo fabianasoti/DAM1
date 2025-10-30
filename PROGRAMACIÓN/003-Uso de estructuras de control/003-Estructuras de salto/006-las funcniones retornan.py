@@ -7,7 +7,7 @@
 def diHola(nombre, edad):
     return 'Hola'+nombre+'tienes'+str(edad)+'años y yo te saludo'
 
-diHola('José', 47)
-diHola ('Jorge', 48)
+diHola('Fabi', 23)
+diHola('Ana', 23)
 
 
