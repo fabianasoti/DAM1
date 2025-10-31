@@ -8,5 +8,5 @@ FROM emails
 LEFT JOIN personas
 ON emails.persona = personas.Identificador;
 
-SELECT * FROM personas_correos;
+SELECT * FROM personas_correos; -- se comporta como una tabla
 

@@ -10,7 +10,7 @@ REFERENCES personas(identificador)
 ON DELETE CASCADE
 ON UPDATE CASCADE;
 
-ALTER TABLE emails								-- Altera la tabla de emails
+ALTER TABLE emails					-- Altera la tabla de emails
 ADD CONSTRAINT fk_emails_personas	-- Crea una restricción con este nombre
 FOREIGN KEY (persona) -- Creamos una clave hacia persona
 REFERENCES personas(identificador)		-- que referencia el identificador

@@ -5,7 +5,7 @@ import sqlite3
 conexion = sqlite3.connect("empresa.db")
 
 # Creamos un cursor
-cursor =conexion.cursor()
+cursor = conexion.cursor()
 
 cursor.execute('''
     CREATE TABLE IF NOT EXISTS "clientes" (
