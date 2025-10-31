@@ -1,0 +1,26 @@
+[
+	{
+		"titulo":"Primer artículo",
+		"fecha":"2025-10-16",
+		"autor":"Fabiana Sotillo",
+		"contenido":"Este es el contenido del primer artículo"
+	},
+	{
+		"titulo":"Segundo artículo",
+		"fecha":"2025-10-16",
+		"autor":"Fabiana Sotillo",
+		"contenido":"Este es el contenido del primer artículo"
+	},
+	{
+		"titulo":"Tercero artículo",
+		"fecha":"2025-10-16",
+		"autor":"Fabiana Sotillo",
+		"contenido":"Este es el contenido del primer artículo"
+	},
+	{
+		"titulo":"Cuarto artículo",
+		"fecha":"2025-10-16",
+		"autor":"Fabiana Sotillo",
+		"contenido":"Este es el contenido del primer artículo"
+	}
+]
