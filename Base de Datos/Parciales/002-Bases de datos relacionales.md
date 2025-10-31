@@ -27,13 +27,22 @@ mysql> USE biblioteca25;
 Database changed
 ```
 
-- Se crea la primera tabla con las claves primarias (PRIMARY KEY): identifican de forma única cada fila.
+- Se crea la primera tabla con las claves primarias (PRIMARY KEY): identifican de forma única cada fila. Y se usa DESCRIBE para mostrar la tabla y confirmar que está bien construida.
 ```
 mysql> CREATE TABLE autores (
     ->   id INT AUTO_INCREMENT PRIMARY KEY,
     ->   nombre VARCHAR(100) NOT NULL,
     ->   pais VARCHAR(80) NULL
     -> );
+		
+	DESCRIBE autores;
++--------+--------------+------+-----+---------+----------------+
+| Field  | Type         | Null | Key | Default | Extra          |
++--------+--------------+------+-----+---------+----------------+
+| id     | int          | NO   | PRI | NULL    | auto_increment |
+| nombre | varchar(100) | NO   |     | NULL    |                |
+| pais   | varchar(80)  | YES  |     | NULL    |                |
++--------+--------------+------+-----+---------+----------------+
 		
 mysql> CREATE TABLE libros(
     -> id INT AUTO_INCREMENT PRIMARY KEY,
@@ -42,6 +51,17 @@ mysql> CREATE TABLE libros(
     ->   precio DECIMAL(8,2) NOT NULL,
     ->   autor_id INT NOT NULL
     -> );
+	
+DESCRIBE libros;
++----------+--------------+------+-----+---------+----------------+
+| Field    | Type         | Null | Key | Default | Extra          |
++----------+--------------+------+-----+---------+----------------+
+| id       | int          | NO   | PRI | NULL    | auto_increment |
+| titulo   | varchar(20)  | NO   |     | NULL    |                |
+| isbn     | varchar(255) | NO   | UNI | NULL    |                |
+| recio    | decimal(8,2) | NO   |     | NULL    |                |
+| autor_id | int          | NO   | MUL | NULL    |                |
++----------+--------------+------+-----+---------+----------------+
 ```
 
 - Se crean las claves foráneas (FOREIGN KEY): vinculan datos entre tablas relacionadas.
@@ -80,6 +100,18 @@ INSERT INTO libros VALUES(
 	2
 );
 Query OK, 1 row affected (0,01 sec)
+```
+
+- Y luego si se usa SELECT * FROM libros; se puede mostrar lo que se ha ingresado en la tabla que se seleccione, por ejemplo:
+```
+SELECT * FROM libros;
++----+-----------------------+----------------+--------+----------+
+| id | titulo                | isbn           | precio | autor_id |
++----+-----------------------+----------------+--------+----------+
+|  1 | Violeta               | 978-9500720001 |  20.99 |        1 |
+|  2 | Cien años de soledad  | 9780307474728  |  11.99 |        2 |
+|  3 | Kafka en la orilla    | 9788499082478  |  18.99 |        3 |
++----+-----------------------+----------------+--------+----------+
 ```
 
 - Se realizan consultas y validaciones: permiten verificar la consistencia del diseño. En este caso se ejemplifica con la verificación de que email sea válido dentro de esta inserción
