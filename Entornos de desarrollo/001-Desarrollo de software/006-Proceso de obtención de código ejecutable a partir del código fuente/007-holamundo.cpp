@@ -13,4 +13,4 @@ int main(){
 }
 
 // compilar = g++ 007-holamundo.cpp -o acpp.out
-
+// Ejecutar: ./acpp.out (win: a.exe)
