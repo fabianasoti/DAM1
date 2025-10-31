@@ -15,14 +15,11 @@ El objetivo de este ejercicio es crear una base de datos relacional en MySQL par
 
 En este ejercicio se aplican los siguientes conocimientos técnicos, los cuales se ponen en práctica en la creación de la base de datos biblioteca25 y sus tablas correspondientes: autores, libros, socios y prestamos, todas integradas mediante claves foráneas:
 
-- Se crear BD y usarla:
+- Se crea la BD y  se selecciona para usarla:
 ```
 mysql> CREATE DATABASE biblioteca25;
 Query OK, 1 row affected (0,00 sec)
-```
 
-- Se elige la base de datos para trabajar con ella
-```
 mysql> USE biblioteca25;
 Database changed
 ```
