@@ -111,7 +111,7 @@ SELECT * FROM libros;
 +----+-----------------------+----------------+--------+----------+
 ```
 
-- Se realizan consultas y validaciones: permiten verificar la consistencia del diseño. En este caso se ejemplifica con la verificación de que email sea válido dentro de esta inserción
+- Se realizan consultas y validaciones: permiten verificar la consistencia del diseño. En este caso se ejemplifica con la verificación de que email sea válido dentro de esta inserción. En este caso, como ha sido un ingreso erróneo, mysql muestra el mensaje de error.
 ```
 -- Verificación insertar email inválido para que dé error:
 INSERT INTO socios VALUES(
