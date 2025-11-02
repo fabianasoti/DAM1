@@ -1,1 +1,0 @@
-open("miarchivo.txt", 'w')
