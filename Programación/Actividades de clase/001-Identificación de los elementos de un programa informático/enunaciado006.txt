@@ -1,0 +1,26 @@
+Calculadora de Impuestos con Operadores Aritméticos y Booleanos
+Contexto
+
+Estás interesado en aprender a crear una calculadora simple que calcule el IVA (Impuesto sobre Valor Añadido) de una factura y su total. Además, quieres integrar tus habilidades de ganchillo y arte latte para decorar la interfaz gráfica de tu aplicación. El mundo del café puede inspirarte en el diseño elegante y funcional que necesitas.
+Enunciado paso a paso
+
+    Declaración de Variables: Crea variables para almacenar la base imponible, el IVA calculado y el total de la factura.
+    Entrada de Datos: Solicita al usuario que introduzca la base imponible de la factura.
+    Cálculo del IVA: Utiliza operadores aritméticos para calcular el IVA (asumiendo un IVA del 21%).
+    Cálculo del Total: Suma la base imponible con el IVA para obtener el total.
+    Salida de Resultados: Muestra al usuario los valores calculados.
+
+Restricciones
+
+    No uses funciones o métodos adicionales.
+    Solo puedes utilizar operadores aritméticos y booleanos aprendidos en clase.
+    Evita la lectura de entrada del teclado (input()).
+
+Criterios de evaluación
+
+    Introducción y contextualización (25%): Explica el propósito de la calculadora y cómo integra tus hobbies.
+    Desarrollo técnico correcto y preciso (25%): Muestra que has utilizado correctamente los operadores aritméticos y booleanos en tu código.
+    Aplicación práctica con ejemplo claro (25%): Proporciona ejemplos claros de cómo se calcularían los valores para una base imponible dada.
+    Cierre/Conclusión enlazando con la unidad (25%): Concluye explicando cómo esta actividad te prepara para el futuro y cómo puedes aplicar estos conceptos en proyectos más complejos.
+
+
