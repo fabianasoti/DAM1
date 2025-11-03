@@ -14,7 +14,7 @@ class Cliente():
         self.nombre = None
         self.direccion = None
 
-print("Programa de gestión de clientes v.01 Fabiana Sotillo")
+print("Programa de gestión de clientes v0.1 Fabiana Sotillo")
 
 # Muestro opciones en el menú para el usuario
 print("Selecciona una opción: ")

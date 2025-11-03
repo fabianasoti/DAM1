@@ -19,6 +19,11 @@ productos = []
 # Primero lanzamos un mensaje de bienvenida
 print("Gestor de productos v01. Fabiana")
 # Le mostramos al usuario las opciones que tiene
+print("Selecciona una opción:")
+print("1.-Crear un nuevo producto")
+print("2.-Listar productos")
+print("3.-Actualizar productos")
+print("4.-Eliminar productos")
 # En función de la opción que coja el usuario
     # O bien creamos un nuevo producto
     # O bien listamos los productos

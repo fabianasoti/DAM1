@@ -1,12 +1,14 @@
 class CuentaBancaria():
-    def __init__(self):
-        self.__saldo = 0
-        self.__cliente = ""
+  def __init__(self):
+    self.__saldo = 0
+    self.__cliente = ""
     
-    # Defino setters y getters para el saldo
-    def setSaldo(self):
-        self.__saldo = nuevosaldo
-
-cuentacliente1 = CuentaBancaria()
-cuentacliente1.setSaldo(1000000000)
-        
+  # Defino setters y getters para el saldo
+  def setSaldo(self,nuevosaldo):
+    self.__saldo = nuevosaldo
+  def getSaldo(self):
+    return self.__saldo
+    
+cuentecliente1 = CuentaBancaria()
+cuentecliente1.setSaldo(10000000000)
+print(cuentecliente1.getSaldo())

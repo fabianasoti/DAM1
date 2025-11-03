@@ -6,7 +6,7 @@ class Cliente():
     def __init__(self):
         self.nombre = None # O le pongo "" para indicar que va a ser un string y su tipo de dato
         self.edad = 0 # Para que se sepa que será un número
-        self.telefonos = [] # Objetos y listas pueden combinarse. Deben ser una lista vacia po
+        self.telefonos = [] # Objetos y listas pueden combinarse. Deben ser una lista vacia
 
 # Ahora instancio un nuevo objeto
 cliente1 = Cliente()

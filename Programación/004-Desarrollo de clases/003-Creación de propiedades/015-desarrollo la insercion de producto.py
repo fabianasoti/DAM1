@@ -33,7 +33,7 @@ while True:
         print("Creamos un nuevo producto")
         producto = Producto()   # Creo una nueva instancia de clase
         producto.nombre = input("Introduce el nombre del producto: ")   # Escribo la propiedad
-        producto.precio = input("Introduce el precio del producto: ")   # Escribo la propiedadç
+        producto.precio = input("Introduce el precio del producto: ")   # Escribo la propiedad
         productos.append(producto)  # Y añado el producto a la lista de productos
     elif opcion == 2:
         # O bien listamos los productos

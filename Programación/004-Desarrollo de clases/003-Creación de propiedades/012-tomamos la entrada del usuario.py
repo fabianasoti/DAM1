@@ -26,17 +26,9 @@ print("3.-Actualizar productos")
 print("4.-Eliminar productos")
 opcion = int(input("Escoge tu opción: "))
 # En función de la opción que coja el usuario
-if opcion == 1:
     # O bien creamos un nuevo producto
-    print("Creamos un nuevo producto")
-elif opcion == 2:
     # O bien listamos los productos
-    print("Vamos a listar los productos")
-elif opcion == 3:
     # O bien actualizamos los productos
-    print("Vamos a actualizar los productos")
-elif opcion == 4:
     # O bien eliminamos los productos
-    print("Vamos a eliminar los productos")
 # Y volvemos a repetir
 

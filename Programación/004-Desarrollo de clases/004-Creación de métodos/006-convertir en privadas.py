@@ -4,7 +4,7 @@ class CuentaBancaria():
         self.__cliente = ""
     
     # Defino setters y getters para el saldo
-    def setSaldo(self):
+    def setSaldo(self,nuevosaldo):
         self.__saldo = nuevosaldo
 
 cuentacliente1 = CuentaBancaria()
