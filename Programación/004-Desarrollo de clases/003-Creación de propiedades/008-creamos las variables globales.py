@@ -13,3 +13,6 @@ class Producto():
         self.precio = 0
 
 
+# Creamos las variables globales
+
+productos = []

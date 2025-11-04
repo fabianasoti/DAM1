@@ -1,11 +1,12 @@
 class Gato:
-#un gato puede tener color
-#cada gato es dif y tiene colores diferentes
- def init_(self): 
+  def __init__(self):
     self.color = ""
-    
+    self.edad = 0
+  
 jaegger = Gato()
 jaegger.color = "crema"
+jaegger.edad = 9
 
 lana = Gato()
 lana.color = "gris"
+lana.edad = 11

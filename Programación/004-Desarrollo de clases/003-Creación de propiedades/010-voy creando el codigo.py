@@ -17,6 +17,7 @@ class Producto():
 productos = []
 
 # Primero lanzamos un mensaje de bienvenida
+print("Gestor de productos v0.1 Fabiana Victoria Sotillo")
 # Le mostramos al usuario las opciones que tiene
 # En función de la opción que coja el usuario
     # O bien creamos un nuevo producto

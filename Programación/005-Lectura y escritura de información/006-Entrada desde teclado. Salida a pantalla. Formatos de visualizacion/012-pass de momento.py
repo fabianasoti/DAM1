@@ -18,15 +18,15 @@ while True:
 	print("4.-Eliminar un cliente")
 	opcion = int(input("Escoge una opción: "))
 	
-	if opcion == 1
+	if opcion == 1:
 		nombre = input("Introduce el nombre: ")
 		apellidos = input("Introduce los apellidos: ")
 		email = input("Introduce el email: ")
 		clientes.append(Cliente(nombre,apellidos,email))
-	elif opcion == 2
+	elif opcion == 2:
 		pass
-	elif opcion == 3
+	elif opcion == 3:
 		pass
-	elif opcion == 4
+	elif opcion == 4:
 		pass
 	

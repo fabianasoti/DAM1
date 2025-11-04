@@ -6,8 +6,9 @@
 
 # Estructura base de cualquier programa empresarial
 
-# Muestro opciones en el menú para el usuario
 print("Programa de gestión de clientes v.01 Fabiana Sotillo")
+
+# Muestro opciones en el menú para el usuario
 print("Selecciona una opción: ")
 print("1.- Insertar un cliente")
 print("2.- Listar clientes")
@@ -29,4 +30,5 @@ while True: # Esto desata un bucle infinito pero controlado
         print("Vamos a actualizar a un cliente")
     elif opcion == 4:
         print("Vamos a eliminar un cliente")
-
+    else:
+        break
