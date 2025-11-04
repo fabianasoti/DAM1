@@ -1,11 +1,27 @@
+```
+'''
+Evaluación de final de unidad - Desarrollo de clases
+2025 Fabiana Victoria Sotillo
+Programa que crea clase, define constructor, crea instancias y hace uso del método set y get
+'''
+```
+
+---
 En la programación orientada a objetos, existen conceptos fundamentales: clases, objetos, atributos, métodos y constructores. 
 
-Una clase permite crear tipos de objetos con características y comportamientos específicos, mientras que un objeto representa una instancia concreta de esa clase. Los atributos o propiedades almacenan la información asociada a cada objeto, y los métodos son las funciones que determinan las acciones que este puede realizar. Finalmente, el constructor (__init__) es un método especial que se ejecuta automáticamente al crear un objeto, permitiendo inicializar sus atributos y garantizar su correcto funcionamiento desde el inicio.
+Una clase permite crear tipos de objetos con características y comportamientos específicos, mientras que un objeto representa una instancia concreta de esa clase. 
 
-A continuación se creará una clase Cliente en Python, en la que se definirá el constructor con sus propiedades, se utilizará el método set y get y se realizarán tres instancias.
+Los atributos o propiedades almacenan la información asociada a cada objeto, y los métodos son las funciones que determinan las acciones que este puede realizar. 
 
-A través de esta práctica, se busca comprender cómo crear clases de manera íntegra:
+El constructor (__init__) es un método especial que se ejecuta al crear un objeto, permitiendo definir sus atributos y garantizar su correcto funcionamiento desde el inicio.
 
+Los métodos get y set en Python se utilizan para controlar el acceso a los atributos de una clase. Los métodos get (obtener) devuelven el valor de un atributo, mientras que los métodos set (establecer) permiten modificar o asignar un nuevo valor.
+
+El propósito del ejercicio es demostrar cómo se pueden encapsular datos y manipular propiedades de un objeto de forma controlada, garantizando una estructura organizada y reutilizable del código. Además, se crean tres instancias independientes de la clase para comprobar el funcionamiento de los métodos y validar el correcto manejo de la información de cada cliente.
+
+A través de esta práctica, se busca comprender cómo crear clases de manera íntegra y estructurada.
+
+---
 Para ello, se explica el paso a paso de la construcción del código:
 
 - Se crea una clase Cliente.
@@ -73,10 +89,11 @@ print(cliente3.getDireccion())
 print(cliente3.getEmail()) 
 ```
 
+---
 A continuación, se ilustra el código completo:
 ```
 '''
-Actividad de final de unidad - Desarrollo de clases
+Evaluación de final de unidad - Desarrollo de clases
 2025 Fabiana Victoria Sotillo
 Programa que crea clase, define constructor, crea instancias y hace uso del método set y get
 '''
@@ -131,3 +148,10 @@ print(cliente2.getEmail())
 print(cliente3.getDireccion()) 
 print(cliente3.getEmail()) 
 ```
+
+---
+A través de este ejercicio se expresa la importancia de los constructores y los métodos de acceso (set y get) dentro de la programación orientada a objetos.
+
+La clase Cliente permitió representar entidades con atributos propios y modificar sus valores mediante métodos,
+
+Finalmente, el programa se ejecuta de manera correcta, junto con la creación de múltiples instancias, y se evidencia la capacidad de aplicar los principios básicos de la creación de clases de manera práctica y estructurada.
