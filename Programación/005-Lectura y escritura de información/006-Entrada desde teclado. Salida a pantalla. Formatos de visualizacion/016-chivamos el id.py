@@ -34,7 +34,6 @@ while True:
 		nombre = input("Introduce el nombre: ")
 		apellidos = input("Introduce los apellidos: ")
 		email = input("Introduce el email: ")
-		clientes.append(Cliente(nombre,apellidos,email))
 		clientes[identificador].nombre = nombre
 		clientes[identificador].apellidos = apellidos
 		clientes[identificador].email = email

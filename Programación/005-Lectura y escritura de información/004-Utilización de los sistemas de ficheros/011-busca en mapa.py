@@ -1,4 +1,4 @@
-archivo = open("mapa.txt",'r')#READ
+archivo = open("mapa.txt",'r') # READ
 
 lineas = archivo.readlines()
 

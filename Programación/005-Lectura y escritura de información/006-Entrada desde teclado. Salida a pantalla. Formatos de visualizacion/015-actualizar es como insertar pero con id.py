@@ -22,7 +22,7 @@ while True:
 		nombre = input("Introduce el nombre: ")
 		apellidos = input("Introduce los apellidos: ")
 		email = input("Introduce el email: ")
-		clientes.append(Cliente(nombre,apellidos,email)
+		clientes.append(Cliente(nombre,apellidos,email))
 	elif opcion == 2:
 		for cliente in clientes:
 			print(cliente.nombre,cliente.apellidos,cliente.email)
@@ -31,7 +31,6 @@ while True:
 			nombre = input("Introduce el nombre: ")
 			apellidos = input("Introduce los apellidos: ")
 			email = input("Introduce el email: ")
-			clientes.append(Cliente(nombre,apellidos,email)
 			clientes[identificador].nombre = nombre
 			clientes[identificador].apellidos = apellidos
 			clientes[identificador].email = email

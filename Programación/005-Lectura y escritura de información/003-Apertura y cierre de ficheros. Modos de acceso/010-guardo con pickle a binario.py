@@ -11,5 +11,5 @@ clientes.append(Cliente("Fabiana", "info@fabiana.com"))
 clientes.append(Cliente("Victoria", "info@victoria.com"))
 
 archivo = open("clientes.bn","wb")
-pickle.dump(clientes,archivo)
+pickle.dump(clientes,archivo)   # Sirve para guardar la info
 archivo.close()

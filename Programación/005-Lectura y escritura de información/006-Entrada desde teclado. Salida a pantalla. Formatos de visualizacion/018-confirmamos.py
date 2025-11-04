@@ -42,9 +42,9 @@ while True:
 	elif opcion == 4:
 		identificador = int(input("Introduce el ID para eliminar: "))
 		confirmacion = input("¿Estás seguro? (S/N): ")
-		if confirmacion == "S"
+		if confirmacion == "S":
 			clientes.splice(identificador,1)
-		elif confirmacion == "N" 
+		elif confirmacion == "N": 
 			print("Cancelado")
 		else:
 			print("Opción no válida")
