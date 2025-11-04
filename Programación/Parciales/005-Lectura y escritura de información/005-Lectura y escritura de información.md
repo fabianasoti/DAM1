@@ -99,8 +99,6 @@ except:
 ---
 A continuación se ilustra el código funcional completo:
 
-
-```
 ```
 '''
 Gestión, lectura y escritura de datos con CRUD y Pickle
