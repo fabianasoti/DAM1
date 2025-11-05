@@ -14,3 +14,7 @@ b) Que presente opciones CRUD
 c) Bucle infinito
 d) Atrapar las opciones con if-elif
 e) Para cada una de las opciones, ejecutar MySQL INSERT, SELECT, UPDATE, DELETE
+
+Paso 3: Hacer un front simulado, del portafolio, en HTML y CSS
+a) Crea una estructura HTML básica y legal
+b) En body, crea header, main, footer
