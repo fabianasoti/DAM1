@@ -9,3 +9,10 @@ edad
 FROM clientes
 ORDER BY edad DESC
 LIMIT 1;
+
++---------+------------+------+
+| nombre  | apellidos  | edad |
++---------+------------+------+
+| Alberto | Domínguez  |   53 |
++---------+------------+------+
+
