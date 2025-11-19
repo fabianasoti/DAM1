@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang = "es">
+	<head>
+	 <title>Javascript</title>
+	 <meta charset="utf-8">
+	</head>
+	<body>
+		<header><h1>El blog de Fabiana</h1></header>
+		<main></main>
+		<footer>(c) 2025 Fabiana Sotillo</footer>
+		<script>
+			const articulos = [
+				"Primer articulo","Segundo artículo","Tercer artículo"
+			];
+			const contenedor = document.querySelector("main");
+			for(let i = 0;i<articulos.length;i++){	// Recorro los articulos
+				contenedor.innerHTML += "<h3>"+articulos[i]+"<h3>";			
+			}
+		</script>
+	</body>
+</html>
