@@ -11,7 +11,7 @@ def envio():
 	nombre = request.args.get("nombre")
 	apellidos = request.args.get("apellidos")
 	print(nombre,apellidos)
-	return "nombre: "+nombre+" - apellidos: "+apellidos
+	return "Tu nombre es: "+nombre+" "+apellidos
 
 if __name__ == "__main__":
 	app.run(debug=True)
