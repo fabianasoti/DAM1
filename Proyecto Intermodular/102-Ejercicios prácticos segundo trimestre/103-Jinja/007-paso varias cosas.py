@@ -26,8 +26,8 @@ for fila in filas:												# Recorro el resultado
 app = Flask(__name__)
 
 @app.route("/")
-def holamundo():
-	return render_template("backoffice.html",mis_tablas = tablas)	# Envio las tablas a HTMl
+def inicio():
+	return render_template("backoffice.html",mis_tablas = tablas, mis_columnas = columnas)	# Envio las tablas a HTMl
 	
 if __name__ == "__main__":
 	app.run(debug=True)
