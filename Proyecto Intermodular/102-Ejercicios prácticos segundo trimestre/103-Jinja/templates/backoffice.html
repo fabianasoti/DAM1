@@ -36,39 +36,13 @@
 						</tr>
 					</thead>
 					<tbody>
+						{% for fila in mi_contenido_tabla: %}
 						<tr>
-							<td>Susana</td><td>Santana</td><td>info@susana.com</td><td>La calle de Susana</td>
+							{% for dato in fila: %}
+								<td> {{dato}} </td>
+							{% endfor %}
 						</tr>
-						<tr>
-							<td>Carlos</td><td>Ramírez</td><td>c.ramirez@example.com</td><td>Avenida del Sol 123</td>
-						</tr>
-						<tr>
-							<td>Laura</td><td>Mendoza</td><td>laura.mz@example.com</td><td>Calle Primavera 45</td>
-						</tr>
-						<tr>
-							<td>Javier</td><td>López</td><td>j.lopez@example.com</td><td>Paseo de los Olivos 78</td>
-						</tr>
-						<tr>
-							<td>Isabel</td><td>Torres</td><td>isatorres@example.com</td><td>Camino del Río 12</td>
-						</tr>
-						<tr>
-							<td>Marcos</td><td>García</td><td>marcosg@example.com</td><td>Calle Luna 9</td>
-						</tr>
-						<tr>
-							<td>Patricia</td><td>Vega</td><td>patri.vega@example.com</td><td>Avenida del Mar 210</td>
-						</tr>
-						<tr>
-							<td>Héctor</td><td>Navarro</td><td>hector.nv@example.com</td><td>Calle Jardines 33</td>
-						</tr>
-						<tr>
-							<td>Sofía</td><td>Rojas</td><td>sofia.rj@example.com</td><td>Paseo Central 67</td>
-						</tr>
-						<tr>
-							<td>Diego</td><td>Morales</td><td>d.morales@example.com</td><td>Bulevar Encinas 101</td>
-						</tr>
-						<tr>
-							<td>Ana</td><td>Flores</td><td>ana.flores@example.com</td><td>Calle del Bosque 56</td>
-						</tr>
+						{% endfor %}
 					</tbody>
 				</table>
 			</section>
