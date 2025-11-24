@@ -10,7 +10,11 @@
 				botones.forEach(function(texto_boton){
 					let boton = document.createElement("button");
 					boton.textContent = texto_boton;
-					contenedor.appendChild(boton)
+					contenedor.appendChild(boton);
+					// Cuando hagas click sobre el botón...
+					boton.onclick = function(){
+						console.log("Has hecho click en el botón")
+						}
 				})
 			</script>
 		</body>
