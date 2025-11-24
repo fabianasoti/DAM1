@@ -8,7 +8,7 @@ De ahí en adelnate, todos los archivos que hagáis tendrán que estar en:
 Liberación de permisos:
 
 cd /var/www
-sudo chmod 777 -R html
+sudo chfmod 777 -R html
 
 sudo = El super usuario va a hacer algo
 chmod = cambiamos permisos de archivo y carpeta
