@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Backoffice</title>
+  <style>
+    :root{
+      --accent: CadetBlue;
+      --bg: #f5f7f7;
+      --card-radius: 16px;
+    }
+
+    /* Reset / base */
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background: var(--bg);
+      color: #222;
+      -webkit-font-smoothing:antialiased;
+    }
+
+    /* Header */
+    header{
+      width:100%;
+      background: var(--accent);
+      padding: 28px 20px;
+      color: white;
+      text-align: center;
+      font-size: 1.25rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+
+    /* Main container - separación clara del header y centrado del contenido */
+    main{
+      max-width: 1200px;
+      margin: 28px auto; /* separación vertical desde el header */
+      padding: 0 20px 48px;
+    }
+
+    /* Sección de tarjetas con Flexbox */
+    section.cards{
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center; /* centra las columnas */
+      align-items: flex-start;  /* alinea las tarjetas por la parte superior */
+    }
+
+    /* Cada tarjeta */
+    article.card{
+      width: 300px;              /* ancho para que quepan 3 columnas en pantallas suficientemente anchas */
+      background: white;
+      border: 1px solid var(--accent);
+      border-radius: var(--card-radius);
+      padding: 18px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+      transition: transform .15s ease, box-shadow .15s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    article.card:hover{
+      transform: translateY(-6px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    }
+
+    /* Tipografía de los campos */
+    .field-label{
+      font-weight: 600;
+      font-size: 0.95rem;
+      margin: 0;
+    }
+    .field-value{
+      margin: 0 0 6px 0;
+      font-size: 0.95rem;
+      color: #333;
+    }
+
+    /* Responsive: 2 columnas en pantallas medianas */
+    @media (max-width: 980px){
+      article.card{ width: 45%; min-width: 240px; }
+    }
+
+    /* Responsive: 1 columna en móviles */
+    @media (max-width: 600px){
+      main{ margin: 18px 12px; padding-bottom: 30px; }
+      article.card{ width: 100%; }
+      header{ padding: 20px 12px; font-size: 1.1rem; }
+    }
+  </style>
+</head>
+<body>
+  <header>Gestión de escuela</header>
+
+  <main>
+    <section class="cards">
+      {% for linea in datos %}
+        <article class="card">
+          <p class="field-label">Asignatura</p>
+          <p class="field-value">{{ linea['Nombre de la asignatura'] }}</p>
+
+          <p class="field-label">Nombre</p>
+          <p class="field-value">{{ linea['Nombre del alumno'] }}</p>
+
+          <p class="field-label">Apellidos</p>
+          <p class="field-value">{{ linea['Apellidos del alumno'] }}</p>
+        </article>
+      {% endfor %}
+    </section>
+  </main>
+</body>
+</html>
+
