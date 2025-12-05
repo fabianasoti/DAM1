@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persona>
+	<nombre>Fabiana Victoria</nombre>
+	<apellidos>Sotillo</apellidos>
+	<telefonos>
+		<telefono>123456781</telefono>
+		<telefono>653464622</telefono>
+		<telefono>456478912</telefono>
+	</telefonos>
+</persona>
