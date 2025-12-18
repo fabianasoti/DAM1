@@ -18,68 +18,71 @@ if ($conexion->connect_error) {
 $errores = [];
 $exito = false;
 
-// 1. INICIALIZAMOS VARIABLES
-// Definimos las variables vacías para que existan en el primer "load" de la página
-// y no tengamos errores de "Undefined variable" en el HTML.
+// Inicializamos variables para el Sticky Form
 $nombre   = "";
 $apellido = "";
+$username = "";
 $email    = "";
 $edad     = "";
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     // Recogida de datos
-    // Al asignar aquí, las variables ya tienen el valor que escribió el usuario
     $nombre   = trim($_POST["nombre"]);
     $apellido = trim($_POST["apellido"]);
+    $username = trim($_POST["username"]);
     $email    = filter_var(trim($_POST["email"]), FILTER_SANITIZE_EMAIL);
-    $edad     = $_POST["edad"]; // Mantenemos el string para el value, luego convertimos a int
+    $edad     = $_POST["edad"];
     $password = $_POST["password"];
 
-    // 2. VALIDACIONES DE PHP
-    if (empty($nombre) || empty($apellido) || empty($email) || empty($password)) {
+    // 1. VALIDACIONES DE PHP
+    if (empty($nombre) || empty($apellido) || empty($username) || empty($email) || empty($password)) {
         $errores[] = "Todos los campos son obligatorios.";
     }
 
+    // Validación USERNAME (Longitud 5-20 y caracteres permitidos)
+    if (!preg_match('/^[a-zA-Z0-9._]{5,20}$/', $username)) {
+        $errores[] = "El username debe tener entre 5 y 20 caracteres (solo letras, números, '.' o '_').";
+    }
+
+    // Validación EMAIL
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $errores[] = "El formato del email no es válido.";
     }
 
-    // Validación de edad (convertimos a entero para validar, pero usaremos $edad en el form)
-    if (empty($edad) || intval($edad) < 1) {
-        $errores[] = "La edad no es válida.";
+    // Validación PASSWORD (Longitud 8-16, Mayúscula y Número)
+    $longitudPass = strlen($password);
+    if ($longitudPass < 8 || $longitudPass > 16) {
+        $errores[] = "La contraseña debe tener entre 8 y 16 caracteres.";
+    } elseif (!preg_match('/[A-Z]/', $password) || !preg_match('/[0-9]/', $password)) {
+        $errores[] = "La contraseña debe incluir al menos una mayúscula y un número.";
     }
 
-    if (strlen($password) < 8 || !preg_match('/[A-Z]/', $password) || !preg_match('/[0-9]/', $password)) {
-        $errores[] = "La contraseña debe tener al menos 8 caracteres, una mayúscula y un número.";
-    }
-
-    // 3. VERIFICAR SI EL EMAIL YA EXISTE
+    // 2. VERIFICAR SI USERNAME O EMAIL YA EXISTEN
     if (empty($errores)) {
-        $checkEmail = $conexion->prepare("SELECT id FROM usuarios WHERE email = ?");
-        $checkEmail->bind_param("s", $email);
-        $checkEmail->execute();
-        $checkEmail->store_result();
+        $checkUser = $conexion->prepare("SELECT id FROM usuarios WHERE email = ? OR username = ?");
+        $checkUser->bind_param("ss", $email, $username);
+        $checkUser->execute();
+        $checkUser->store_result();
         
-        if ($checkEmail->num_rows > 0) {
-            $errores[] = "Este email ya está registrado.";
+        if ($checkUser->num_rows > 0) {
+            $errores[] = "El email o el username ya están en uso.";
         }
-        $checkEmail->close();
+        $checkUser->close();
     }
 
-    // 4. INSERTAR SI NO HAY ERRORES
+    // 3. INSERTAR SI NO HAY ERRORES
     if (empty($errores)) {
         $passwordHash = password_hash($password, PASSWORD_DEFAULT);
-        $edadInt = intval($edad); // Convertimos para la BD
+        $edadInt = intval($edad);
 
-        $stmt = $conexion->prepare("INSERT INTO usuarios (nombre, apellido, email, edad, password) VALUES (?, ?, ?, ?, ?)");
-        $stmt->bind_param("sssis", $nombre, $apellido, $email, $edadInt, $passwordHash);
+        $stmt = $conexion->prepare("INSERT INTO usuarios (nombre, apellido, username, email, edad, password) VALUES (?, ?, ?, ?, ?, ?)");
+        // ssssis -> string, string, string, string, integer, string
+        $stmt->bind_param("ssssis", $nombre, $apellido, $username, $email, $edadInt, $passwordHash);
 
         if ($stmt->execute()) {
             $exito = true;
-            // Opcional: Limpiar variables tras éxito para vaciar el formulario
-            // $nombre = $apellido = $email = $edad = ""; 
         } else {
-            $errores[] = "Error al registrar el usuario en la base de datos.";
+            $errores[] = "Error técnico al registrar. Inténtalo de nuevo.";
         }
         $stmt->close();
     }
@@ -92,7 +95,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <meta charset="UTF-8">
     <title>Registro Emocional</title>
     <style>
-        /* Estilos (Sin cambios) */
         *{ box-sizing:border-box; font-family:'Segoe UI',sans-serif; }
         body{ margin:0; min-height:100vh; display:flex; justify-content:center; align-items:center; background:linear-gradient(135deg,#cdb4db,#bde0fe); }
         .login-container{ background:#fff; width:100%; max-width:450px; padding:32px; border-radius:20px; box-shadow:0 18px 35px rgba(0,0,0,.15); }
@@ -117,43 +119,38 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <?php endif; ?>
 
     <?php if ($exito): ?>
-        <div class="exito">¡Cuenta creada con éxito! Ya puedes <a href="login.php">iniciar sesión</a>.</div>
+        <div class="exito">¡Registro completado! <a href="login.php">Inicia sesión</a>.</div>
     <?php else: ?>
 
         <form method="POST">
             <div style="display: flex; gap: 10px;">
                 <div style="flex:1">
                     <label>Nombre</label>
-                    <input type="text" name="nombre" required 
-                           value="<?= htmlspecialchars($nombre) ?>">
+                    <input type="text" name="nombre" value="<?= htmlspecialchars($nombre) ?>" required>
                 </div>
                 <div style="flex:1">
                     <label>Apellido</label>
-                    <input type="text" name="apellido" required 
-                           value="<?= htmlspecialchars($apellido) ?>">
+                    <input type="text" name="apellido" value="<?= htmlspecialchars($apellido) ?>" required>
                 </div>
             </div>
 
+            <label>Username</label>
+            <input type="text" name="username" value="<?= htmlspecialchars($username) ?>" placeholder="mín. 5 caracteres" required>
+
             <label>Email</label>
-            <input type="email" name="email" required 
-                   value="<?= htmlspecialchars($email) ?>">
+            <input type="email" name="email" value="<?= htmlspecialchars($email) ?>" required>
 
             <label>Edad</label>
-            <input type="number" name="edad" required 
-                   value="<?= htmlspecialchars($edad) ?>">
+            <input type="number" name="edad" value="<?= htmlspecialchars($edad) ?>" required>
 
             <label>Contraseña</label>
-            <input type="password" name="password" required>
+            <input type="password" name="password" placeholder="8 a 16 caracteres" required>
             
-            <small style="display:block; margin-top:-10px; margin-bottom:15px; font-size:11px; color:#666;">
-                Mínimo 8 caracteres, una mayúscula y un número.
-            </small>
-
             <button type="submit">Registrarme</button>
         </form>
     <?php endif; ?>
 
-    <a href="index.php" class="link">¿Ya tienes cuenta? Inicia sesión</a>
+    <a href="login.php" class="link">¿Ya tienes cuenta? Inicia sesión</a>
 </div>
 
 </body>

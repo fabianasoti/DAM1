@@ -30,12 +30,9 @@ TO 'diarioemocional'@'localhost';
 
 FLUSH PRIVILEGES;
 
-ALTER TABLE usuarios ADD CONSTRAINT chk_password_segura CHECK (
-        CHAR_LENGTH(password) >= 8
-        AND password REGEXP '[A-Za-z]'
-        AND password REGEXP '[0-9]'
-        AND password REGEXP '[^A-Za-z0-9]'
-    );
+ALTER TABLE usuarios 
+ADD COLUMN token_reset VARCHAR(64) NULL DEFAULT NULL,
+ADD COLUMN token_expira DATETIME NULL DEFAULT NULL;
     
 
 INSERT INTO usuarios (nombre, apellido, email, edad, password) VALUES
@@ -53,9 +50,22 @@ INSERT INTO usuarios (nombre, apellido, email, edad, password) VALUES
 
 INSERT INTO usuarios (nombre, apellido, email, edad, password) VALUES('Susana', 'Santana', 'info@susana.com', 23, 'Susana123$');
 
-USE diarioemocional;
+ALTER TABLE usuarios ADD COLUMN username VARCHAR(20) AFTER apellido;
+
+UPDATE usuarios SET username = 'ana_mar' WHERE email = 'ana.martinez@email.com';
+UPDATE usuarios SET username = 'carlos_g' WHERE email = 'carlos.gomez@email.com';
+-- Haz esto con todos tus usuarios actuales...
+UPDATE usuarios SET username = 'susana_s' WHERE email = 'info@susana.com';
 
 ALTER TABLE usuarios 
-ADD COLUMN token_reset VARCHAR(64) NULL DEFAULT NULL,
-ADD COLUMN token_expira DATETIME NULL DEFAULT NULL;
+MODIFY COLUMN username VARCHAR(20) NOT NULL;
+
+ALTER TABLE usuarios 
+ADD CONSTRAINT uk_username UNIQUE (username);
+
+ALTER TABLE usuarios 
+ADD CONSTRAINT chk_username_formato 
+CHECK (username REGEXP '^[a-zA-Z0-9._]{5,20}$');
+
+
 
