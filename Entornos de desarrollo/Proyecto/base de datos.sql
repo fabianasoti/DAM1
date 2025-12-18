@@ -9,11 +9,6 @@ CREATE TABLE usuarios (
     edad INT NOT NULL,
     fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     password VARCHAR(255) NOT NULL,
-    CONSTRAINT chk_password_segura CHECK (
-        CHAR_LENGTH(password) >= 8
-        AND password REGEXP '[A-Za-z]'
-        AND password REGEXP '[0-9]'
-        AND password REGEXP '[^A-Za-z0-9]'
     )
 );
 
@@ -57,4 +52,10 @@ INSERT INTO usuarios (nombre, apellido, email, edad, password) VALUES
 
 
 INSERT INTO usuarios (nombre, apellido, email, edad, password) VALUES('Susana', 'Santana', 'info@susana.com', 23, 'Susana123$');
+
+USE diarioemocional;
+
+ALTER TABLE usuarios 
+ADD COLUMN token_reset VARCHAR(64) NULL DEFAULT NULL,
+ADD COLUMN token_expira DATETIME NULL DEFAULT NULL;
 

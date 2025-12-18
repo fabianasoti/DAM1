@@ -6,65 +6,57 @@ $host = "localhost";
 $user = "diarioemocional";
 $pass = "Diarioemocional123$";
 $db   = "diarioemocional";
- 
+
 $conexion = new mysqli($host, $user, $pass, $db);
 if ($conexion->connect_error) {
     die("Error de conexión");
 }
- 
+
 /****************************
 * LÓGICA LOGIN
 ****************************/
 $errores = [];
 $email = "";
 $password = "";
- 
+$mensaje_exito = "";
+
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
- 
-    $email = trim($_POST["email"]);
+
+    $email = filter_var(trim($_POST["email"]), FILTER_SANITIZE_EMAIL);
     $password = trim($_POST["password"]);
- 
-    // EMAIL
-    if (empty($email)) {
-        $errores[] = "El email es obligatorio.";
-    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $errores[] = "Formato de email inválido.";
+
+    // VALIDACIÓN SINTÁCTICA (PHP)
+    if (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $errores[] = "Introduce un email válido.";
     }
- 
-    // PASSWORD
+
     if (empty($password)) {
         $errores[] = "La contraseña es obligatoria.";
-    } elseif (
-        strlen($password) < 8 ||
-        !preg_match('/[A-Z]/', $password) ||
-        !preg_match('/[a-z]/', $password) ||
-        !preg_match('/[0-9]/', $password) ||
-        !preg_match('/[\W]/', $password)
-    ) {
-        $errores[] = "Mínimo 8 caracteres, mayúscula, minúscula, número y símbolo.";
     }
- 
-    // VALIDACIÓN BD
+
+    // VALIDACIÓN CONTRA BASE DE DATOS
     if (empty($errores)) {
-        $stmt = $conexion->prepare(
-            "SELECT password FROM usuarios WHERE email = ?"
-        );
+        // 1. Buscamos el usuario por email
+        $stmt = $conexion->prepare("SELECT password FROM usuarios WHERE email = ?");
         $stmt->bind_param("s", $email);
         $stmt->execute();
         $stmt->store_result();
- 
+
         if ($stmt->num_rows === 1) {
-            $stmt->bind_result($hash);
+            $stmt->bind_result($hash_almacenado);
             $stmt->fetch();
- 
-            if (password_verify($password, $hash)) {
+
+            // 2. Verificamos si el texto plano coincide con el hash almacenado
+            if (password_verify($password, $hash_almacenado)) {
                 $mensaje_exito = "Bienvenido/a 💜 Este es tu espacio seguro.";
             } else {
-                $errores[] = "Credenciales incorrectas.";
+                // Mensaje genérico por seguridad (no dar pistas)
+                $errores[] = "El email o la contraseña son incorrectos.";
             }
         } else {
-            $errores[] = "Usuario no encontrado.";
+            $errores[] = "El email o la contraseña son incorrectos.";
         }
+        $stmt->close();
     }
 }
 ?>
@@ -240,6 +232,16 @@ button:hover{
  
         <button type="submit">Iniciar sesión</button>
 </form>
+<div style="text-align: center; margin-top: 15px;">
+    <a href="olvide_password.php" style="color: #6d597a; text-decoration: none; font-size: 14px;">
+        ¿Olvidaste tu contraseña?
+    </a>
+    <br>
+    <a href="registro.php" style="color: #9d4edd; text-decoration: none; font-size: 14px; font-weight: bold;">
+        Crear cuenta nueva
+    </a>
+</div>
+
  
 </div>
  
