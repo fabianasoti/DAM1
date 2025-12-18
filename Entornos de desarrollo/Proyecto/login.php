@@ -18,11 +18,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Validar contraseña
-    if (empty($password)) {
-        $errores[] = "La contraseña es obligatoria.";
-    } elseif (strlen($password) < 8) {
-        $errores[] = "La contraseña debe tener al menos 8 caracteres.";
-    }
+		if (empty($password)) {
+				$errores[] = "La contraseña es obligatoria.";
+		} elseif (strlen($password) < 8) {
+				$errores[] = "La contraseña debe tener al menos 8 caracteres.";
+		} elseif (!preg_match('/[\W_]/', $password)) {
+				$errores[] = "La contraseña debe contener al menos un carácter especial.";
+		}
+
 
     // Si no hay errores
     if (empty($errores)) {
