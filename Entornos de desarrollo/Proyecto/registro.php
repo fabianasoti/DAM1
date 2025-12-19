@@ -150,7 +150,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         </form>
     <?php endif; ?>
 
-    <a href="login.php" class="link">¿Ya tienes cuenta? Inicia sesión</a>
+    <a href="index.php" class="link">¿Ya tienes cuenta? Inicia sesión</a>
 </div>
 
 </body>
