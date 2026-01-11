@@ -1,5 +1,12 @@
-# Codificación y descodificación de cadenas en PHP mediante Base64
+```
+'''
+Codificación y descodificación de cadenas en PHP mediante Base64
+2026 Fabiana Sotillo
 
+'''
+```
+
+---
 El presente ejercicio tiene como objetivo aplicar el concepto de codificación y descodificación de cadenas en el lenguaje PHP mediante el uso de la codificación Base64. Este tipo de técnicas se utilizan para transformar información sensible en un formato diferente que pueda ser transmitido o almacenado de forma segura. A través del uso de las funciones base64_encode() y base64_decode(), se busca comprender cómo convertir una cadena original en una versión codificada y cómo recuperar posteriormente su contenido original, reforzando así la manipulación de datos y el tratamiento de información en aplicaciones web.
 
 ---
