@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Diagrama ER Biblioteca</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+        h1 { color: #333; }
+        .diagram-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            max-width: 100%;
+            overflow-x: auto;
+        }
+        .legend {
+            margin-top: 20px;
+            font-size: 0.9em;
+            color: #555;
+            max-width: 800px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Estructura de Base de Datos: Biblioteca</h1>
+    
+    <div class="diagram-container">
+        <div class="mermaid">
+            erDiagram
+                %% ENTIDADES
+                SECCION {
+                    int ID_Seccion PK
+                    string Nombre "Ej: Ciencia, Literatura"
+                    string Ubicacion
+                }
+
+                LIBRO {
+                    string ISBN PK
+                    string Titulo
+                    string Autor
+                    int ID_Seccion FK "Pertenece a"
+                }
+
+                COPIA {
+                    int ID_Copia PK
+                    string ISBN FK
+                    string Estado "Ej: Nuevo, Deteriorado"
+                }
+
+                MIEMBRO {
+                    int ID_Miembro PK
+                    string Nombre
+                    string Direccion
+                }
+
+                PRESTAMO {
+                    int ID_Prestamo PK
+                    date Fecha_Prestamo
+                    date Fecha_Devolucion
+                    int ID_Copia FK
+                    int ID_Miembro FK
+                }
+
+                %% RELACIONES
+
+                SECCION ||--|{ LIBRO : "contiene (Clasificación)"
+                %% Explicación: Una Sección tiene muchos Libros.
+
+                LIBRO ||--|{ COPIA : "tiene (Agregación)"
+                %% Explicación: Un Libro (ISBN) tiene varias copias físicas.
+
+                COPIA ||--|{ PRESTAMO : "es prestada en"
+                %% Explicación: Una copia física específica se usa en el préstamo.
+
+                MIEMBRO ||--|{ PRESTAMO : "realiza"
+                %% Explicación: Un miembro puede hacer muchos préstamos.
+        </div>
+    </div>
+
+    <div class="legend">
+        <h3>Notas sobre el diseño:</h3>
+        <ul>
+            <li><strong>PK:</strong> Primary Key (Llave Primaria).</li>
+            <li><strong>FK:</strong> Foreign Key (Llave Foránea).</li>
+            <li><strong>Agregación (Libro - Copia):</strong> Se modela separando la entidad <em>Libro</em> (datos abstractos) de la <em>Copia</em> (objeto físico). Esto permite que existan varios ejemplares del mismo ISBN.</li>
+            <li><strong>Préstamo:</strong> Relaciona un <em>Miembro</em> con una <em>Copia</em> específica, no solo con el título del libro.</li>
+        </ul>
+    </div>
+
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({ startOnLoad: true });
+    </script>
+</body>
+</html>

@@ -18,27 +18,33 @@ Posteriormente, se emplea la función base64_decode() para revertir el proceso y
 A continuación, se presentan los fragmentos de código utilizados en el ejercicio junto con su explicación.
 
 1. Codificación de una contraseña en Base64
+```
 <?php
-$contrasena = "contraseñasegura1234";
-echo $contrasena; // Contraseña original
-echo "<br>";
-$codificado = base64_encode($contrasena);
-echo $codificado; // Contraseña codificada en Base64
+	// Original
+	$contrasena = "contraseñasegura1234";
+	echo $contrasena;
+	echo "<br>";
+	
+	// Codificar
+	$codificado = base64_encode($contrasena);
+	echo $codificado;
+	echo "<br>"
 ?>
-
-
+```
 En este bloque se define una variable que almacena la contraseña original y se muestra por pantalla. A continuación, se utiliza la función base64_encode() para obtener su versión codificada y se imprime el resultado.
 
 2. Descodificación de la contraseña
+```
 <?php
+// Descodificamos
 $descodificado = base64_decode($codificado);
 echo $descodificado; // Contraseña original nuevamente
 ?>
-
-
+```
 En este fragmento se emplea la función base64_decode() para convertir la cadena codificada nuevamente en su forma original.
 
 3. Función personalizada para descodificar múltiples veces
+```
 <?php
 function funcion_descodificar($cadena) {
     for ($i = 0; $i < 9; $i++) {
@@ -54,7 +60,7 @@ echo "<br>";
 $descodificado = funcion_descodificar($codificado);
 echo $descodificado; // Contraseña original nuevamente
 ?>
-
+```
 
 En este bloque se define una función llamada funcion_descodificar() que recibe una cadena codificada y la descodifica nueve veces mediante un bucle for. Posteriormente, se prueba la función con una contraseña codificada.
 
