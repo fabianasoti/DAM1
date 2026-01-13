@@ -1,123 +1,90 @@
-# Eventos click y manipulación dinámica de elementos en JavaScript
+```
+'''
+Concepto de eventos en JavaScript
+2026 Fabiana Sotillo
+Eventos Click y Manipulación Dinámica de Elementos en JavaScript
+'''
+```
 
 ---
-El presente ejercicio tiene como objetivo aplicar los conceptos de eventos click y manipulación dinámica de elementos del DOM utilizando JavaScript, así como reforzar el consumo de datos en formato JSON para la creación de interfaces interactivas. A través de la creación dinámica de botones, la gestión de eventos y la generación de tablas a partir de datos externos, se busca comprender cómo JavaScript permite construir aplicaciones web dinámicas y orientadas a la interacción con el usuario.
+En este ejercicio se trabaja el concepto de eventos en JavaScript, concretamente el evento click, junto con la creación y manipulación dinámica de elementos HTML y el consumo de datos en formato JSON. Los eventos permiten que una página web responda a las acciones del usuario, mientras que la manipulación del DOM posibilita crear interfaces interactivas y dinámicas. El objetivo de esta práctica es aprender a generar botones dinámicamente, asociarles eventos, consumir datos desde archivos JSON y representar la información en forma de tablas, reforzando así el desarrollo de aplicaciones web interactivas.
 
 ---
-En esta práctica se trabajan los conceptos fundamentales de creación dinámica de elementos HTML, asignación de eventos click, consumo de datos en formato JSON y generación de contenido dinámico como tablas. Se utilizan distintos archivos base que permiten observar cómo JavaScript interactúa con el DOM para crear botones, procesar información externa y modificar el contenido visual de una página web.
+El ejercicio está compuesto por varios archivos que trabajan conjuntamente para practicar distintos aspectos de la programación con JavaScript.
 
-El uso de eventos permite capturar las acciones del usuario, mientras que el consumo de JSON facilita la carga de datos estructurados que pueden ser representados en forma de tablas o listados. Estos conceptos son esenciales en el desarrollo de aplicaciones web modernas.
+#### Creación dinámica de botones
+En el archivo 002-crear varios botones.html se generan botones dinámicamente a partir de un array de textos. Para cada elemento del array se crea un botón mediante document.createElement() y se añade al contenedor <nav>. A cada botón se le asocia un evento click para detectar la interacción del usuario.
 
----
-Aplicación práctica
-1. Creación dinámica de botones y eventos click
+#### Consumo de datos JSON
+En el archivo 005-consumo json.html se utiliza la función fetch() para cargar un archivo JSON externo (botones.json). Los datos se convierten a formato JavaScript mediante el método .json() y se muestran en la consola. A uno de los botones se le añade un evento click que permite mostrar en consola el texto del botón pulsado.
 
-En el archivo 002-crear varios botones.html se generan varios botones de forma dinámica dentro de un contenedor ```<nav>``` y se les asigna un evento click que muestra un mensaje en consola.
-```
-<script>
-  let botones = ["clientes", "productos", "pedidos"];
-  let nav = document.querySelector("nav");
+#### Recuperación de datos JSON y creación de tabla
+En el archivo 007-recuperamos json tabla.html se recuperan datos desde un archivo tabla.json. Estos datos se recorren y posteriormente se utilizan para crear dinámicamente una tabla HTML, generando filas y celdas según el contenido del JSON.
 
-  for (let i = 0; i < botones.length; i++) {
-    let boton = document.createElement("button");
-    boton.textContent = botones[i];
-    boton.addEventListener("click", function () {
-      console.log("Has hecho click en el botón");
-    });
-    nav.appendChild(boton);
-  }
-</script>
-```
-Este código permite crear una interfaz de navegación básica con botones funcionales.
+#### Creación de una interfaz base
+En el archivo 010-creo interfaz base.html se construye una interfaz básica compuesta por un menú lateral (nav) y una zona principal (main). En el menú se añaden botones dinámicamente mediante JavaScript, a los cuales se les asocia un evento click que muestra en consola un mensaje indicando que se ha pulsado el botón.
 
-2. Consumo de datos JSON y evento click
-
-En el archivo 005-consumo json.html se carga un archivo JSON y se muestra su contenido en consola. Además, se añade un evento click a un botón para mostrar el texto del botón pulsado.
-```
-<script>
-  fetch("botones.json")
-    .then(response => response.json())
-    .then(datos => {
-      console.log(datos);
-    });
-
-  let boton = document.querySelector("button");
-  boton.addEventListener("click", function () {
-    console.log(this.textContent);
-  });
-</script>
-```
-Este ejercicio permite comprender cómo consumir datos externos y trabajar con ellos desde JavaScript.
-
-3. Recuperación de datos JSON y creación de una tabla
-
-En el archivo 007-recuperamos json tabla.html se cargan datos desde un archivo JSON y se genera una tabla dinámicamente al hacer click en un botón.
-```
-<script>
-  fetch("tabla.json")
-    .then(response => response.json())
-    .then(datos => {
-      let boton = document.querySelector("button");
-      boton.addEventListener("click", function () {
-        console.log(this.textContent);
-        crearTabla(datos);
-      });
-    });
-
-  function crearTabla(datos) {
-    let tabla = document.createElement("table");
-    datos.forEach(fila => {
-      let tr = document.createElement("tr");
-      Object.values(fila).forEach(valor => {
-        let td = document.createElement("td");
-        td.textContent = valor;
-        tr.appendChild(td);
-      });
-      tabla.appendChild(tr);
-    });
-    document.body.appendChild(tabla);
-  }
-</script>
-```
-Este bloque demuestra cómo transformar datos JSON en una tabla HTML.
-
-4. Creación de una interfaz base con botones dinámicos
-
-En el archivo 010-creo interfaz base.html se construye una interfaz básica con un contenedor ```<nav>``` y botones creados dinámicamente.
-```
-<script>
-  let opciones = ["Inicio", "Clientes", "Productos", "Pedidos"];
-  let nav = document.querySelector("nav");
-
-  opciones.forEach(opcion => {
-    let boton = document.createElement("button");
-    boton.textContent = opcion;
-    boton.addEventListener("click", function () {
-      console.log("Has hecho click en el botón");
-    });
-    nav.appendChild(boton);
-  });
-</script>
-```
-Este ejercicio permite crear una estructura base para una aplicación web.
-
-5. Estilo dinámico en una tabla
-
-En el archivo 009-estilo en la tabla.html se añade un evento click que permite modificar el estilo de una tabla.
-```
-<script>
-  let boton = document.querySelector("button");
-  let tabla = document.querySelector("table");
-
-  boton.addEventListener("click", function () {
-    tabla.style.border = "2px solid black";
-    tabla.style.backgroundColor = "#f3f4f6";
-  });
-</script>
-```
-Este código demuestra cómo JavaScript puede modificar estilos CSS dinámicamente.
+#### Estilo dinámico en tablas
+En el archivo 009-estilo en la tabla.html se crea una tabla a partir de un archivo JSON y se aplican estilos mediante CSS. Además, se añade un evento click a uno de los botones para modificar el estilo de la tabla de forma dinámica, permitiendo cambiar su apariencia según la interacción del usuario.
 
 ---
-Como resultado de la práctica, se obtiene una interfaz funcional con botones dinámicos, consumo de datos JSON, generación de tablas interactivas y modificación de estilos mediante eventos click. El usuario puede interactuar con la interfaz y observar cómo se actualiza el contenido de forma inmediata.
+Aplicación práctica:
 
-En este ejercicio se han aplicado los conceptos fundamentales de creación dinámica de elementos, asignación de eventos click, consumo de datos JSON y manipulación visual de tablas mediante JavaScript. Estas técnicas permiten construir interfaces interactivas, dinámicas y orientadas al usuario, facilitando el desarrollo de aplicaciones web modernas. El dominio de estos conceptos constituye una base sólida para proyectos más complejos que requieran interacción avanzada y gestión dinámica de datos.
+Creación dinámica de botones:
+```
+<script>
+	let botones = ['clientes','productos','pedidos'];
+	let contenedor = document.querySelector("nav");
+	botones.forEach(function(texto_boton){
+		let boton = document.createElement("button");
+		boton.textContent = texto_boton;
+		boton.addEventListener("click", function(){
+			console.log("Has hecho click en el botón");
+		});
+		contenedor.appendChild(boton);
+	});
+</script>
+```
+
+
+Consumo de JSON:
+```
+<script>
+	fetch("botones.json")
+	.then(function(respuesta){
+		return respuesta.json();				
+	})
+	.then(function(datos){
+		console.log(datos);
+	});
+</script>
+```
+
+
+Creación de tabla a partir de JSON:
+```
+<script>
+	fetch("tabla.json")
+	.then(function(respuesta){
+		return respuesta.json();
+	})
+	.then(function(datos){
+		let contenedor = document.querySelector("body");
+		let tabla = document.createElement("table");
+		contenedor.appendChild(tabla);
+
+		datos.forEach(function(linea){
+			let fila = document.createElement("tr");
+			linea.forEach(function(celda){
+				let data = document.createElement("td");
+				data.textContent = celda;
+				fila.appendChild(data);
+			});
+			tabla.appendChild(fila);
+		});
+	});
+</script>
+```
+
+---
+Este ejercicio permite comprender de forma práctica cómo funcionan los eventos en JavaScript y cómo se pueden utilizar para crear interfaces interactivas. Mediante la creación dinámica de botones, la asignación de eventos click, el consumo de datos JSON y la generación automática de tablas, se refuerza el uso del DOM como herramienta fundamental para el desarrollo web moderno. Estos conocimientos son esenciales para crear aplicaciones dinámicas, ya que permiten reaccionar a las acciones del usuario y mostrar información de forma flexible y estructurada. Además, la combinación de JavaScript con JSON facilita la construcción de aplicaciones conectadas a datos externos, algo imprescindible en proyectos web.

@@ -1,16 +1,10 @@
-```
-'''
-Panel de control
-2026 Fabiana Sotillo
-Creación de una base de datos y sistema web para noticias tecnológicas
-'''
-```
+# Creación de una base de datos y sistema web para noticias tecnológicas
 
----
+
 El presente ejercicio tiene como objetivo consolidar los conocimientos previamente adquiridos sobre bases de datos, lenguaje SQL y desarrollo web con PHP mediante la creación de un sistema completo de gestión de noticias tecnológicas. A través del diseño de una base de datos, la creación de tablas relacionadas, la implementación de un sistema de acceso y la visualización de contenidos en una página web, se busca comprender el funcionamiento de una arquitectura cliente-servidor y reforzar la integración entre bases de datos y aplicaciones web dinámicas.
 
 ---
-En esta práctica se crea un periódico virtual "El jocarsa - Noticias tecnológicas", el cual permite almacenar, consultar y gestionar noticias, autores y usuarios mediante una base de datos relacional. Para ello, se aplican conceptos fundamentales como la creación de bases de datos, definición de tablas, uso de claves primarias y foráneas, consultas SQL y desarrollo de interfaces web con PHP.
+En esta práctica se trabaja con un sistema de información denominado "El jocarsa - Noticias tecnológicas", el cual permite almacenar, consultar y gestionar noticias, autores y usuarios mediante una base de datos relacional. Para ello, se aplican conceptos fundamentales como la creación de bases de datos, definición de tablas, uso de claves primarias y foráneas, consultas SQL y desarrollo de interfaces web con PHP.
 
 El ejercicio también introduce la implementación de un sistema de filtrado que permite mostrar noticias por fecha de publicación o por autor, facilitando el acceso estructurado a la información.
 
@@ -55,23 +49,11 @@ Estas tablas permiten estructurar la información de forma organizada, relaciona
 Se desarrolla un sistema de conexión mediante PHP que permite realizar operaciones de inserción, actualización, eliminación y consulta de datos. Este sistema actúa como intermediario entre la página web y la base de datos.
 ```
 <?php
-// Configuración de credenciales
-$host     = "localhost";
-$usuario  = "el_jocarsa_noticias";
-$password = "Periodico123$";
-$base_datos = "el_jocarsa_noticias";
+$conexion = new mysqli("localhost", "usuario", "password", "el_jocarsa_noticias");
 
-// Crear la conexión
-$conexion = new mysqli($host, $usuario, $password, $base_datos);
-
-// Verificar si hay errores
 if ($conexion->connect_error) {
     die("Error de conexión: " . $conexion->connect_error);
 }
-
-$conexion->set_charset("utf8mb4");
-
-echo "Conexión exitosa a la base de datos.";
 ?>
 ```
 Gracias a esta conexión, se pueden ejecutar consultas SQL desde la aplicación web.

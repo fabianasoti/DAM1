@@ -1,63 +1,102 @@
-# Implementación y validación de un sistema de inicio de sesión con base de datos
-
-El presente ejercicio tiene como objetivo aplicar los conceptos fundamentales relacionados con la validación de usuarios mediante bases de datos, comprendiendo el funcionamiento de un sistema de inicio de sesión a través de consultas SQL y scripts en PHP. A partir de la creación de una base de datos, la configuración de un usuario, la comprobación de credenciales correctas e incorrectas y la integración con un formulario web, se busca entender cómo se gestionan los accesos a un sistema y cómo se valida la autenticación de usuarios en aplicaciones web.
-
----
-En esta actividad se comienza configurando la base de datos y el usuario necesarios para almacenar la información de acceso. Posteriormente, se ejecutan consultas SQL que permiten comprobar tanto un inicio de sesión exitoso como uno fallido, lo que facilita la comprensión del proceso de validación de credenciales.
-
-A continuación, se revisan los archivos PHP encargados de procesar las solicitudes del formulario de inicio de sesión y de verificar si el usuario ha sido autenticado correctamente. De forma complementaria, se analiza el formulario HTML que permite introducir los datos de acceso y enviarlos al servidor.
-
-Finalmente, se revisan los archivos del diagrama exportado, los cuales representan visualmente la arquitectura general del sistema de inicio de sesión, permitiendo comprender de forma gráfica la estructura y el flujo de funcionamiento del proyecto.
+```
+'''
+Login 
+2026 Fabiana Sotillo
+Sistema de Inicio de Sesión con Validación de Usuario
+'''
+```
 
 ---
-Aplicación práctica
-1. Creación de la base de datos y del usuario
+En este ejercicio se trabaja el concepto de validación de usuarios mediante un sistema de inicio de sesión conectado a una base de datos, utilizando tecnologías web como HTML, PHP y SQL. Un sistema de autenticación permite comprobar si las credenciales introducidas por un usuario son correctas antes de permitir el acceso a una aplicación. El objetivo de esta práctica es comprender cómo funciona el proceso de verificación de usuarios, desde el envío de datos a través de un formulario hasta la comprobación en la base de datos y la gestión de sesiones para controlar el acceso a las páginas protegidas.
 
-Se ejecutan los scripts 001-creamos base de datos.sql y 002-creamos usuario.sql para crear la base de datos y el usuario necesarios para el sistema de inicio de sesión. Estos scripts permiten configurar el entorno donde se almacenarán los datos de los usuarios y desde donde se realizarán las comprobaciones de acceso.
+El sistema está compuesto por varios archivos que trabajan de forma conjunta para permitir el inicio de sesión y controlar el acceso a la aplicación.
 
-Este paso es fundamental para garantizar que el sistema dispone de una estructura adecuada para gestionar la información de autenticación.
+### Base de datos y usuario
+Se crea una base de datos llamada superaplicacion, que contiene una tabla llamada usuarios, donde se almacenan las credenciales y datos personales de los usuarios. Además, se crea un usuario de base de datos con los permisos necesarios para acceder a dicha base.
 
-2. Comprobación de inicio de sesión exitoso
+La tabla usuarios contiene los siguientes campos:
+- id
+- usuario
+- contrasena
+- nombrecompleto
+- email
+- creado_en
 
-Se utiliza el script 003-comprobacion exitosa.sql para verificar que la consulta funciona correctamente cuando se introducen las credenciales válidas:
+Esta tabla almacena la información necesaria para validar el inicio de sesión.
 
-Usuario: jlopez
+#### Formulario de inicio de sesión (login.html):
+El archivo login.html contiene un formulario que permite al usuario introducir su nombre de usuario y contraseña. Este formulario envía los datos mediante el método POST al archivo procesa.php, que se encarga de procesar la autenticación.
 
-Contraseña: 1234segura
+#### Procesamiento del inicio de sesión (procesa.php):
+El archivo procesa.php establece la conexión con la base de datos y ejecuta una consulta SQL que busca un usuario cuyo nombre y contraseña coincidan con los datos introducidos en el formulario. Si existe una coincidencia, se inicia una sesión y se redirige al usuario a la página de éxito. En caso contrario, se vuelve a la página de login.
 
-La ejecución de esta consulta permite comprobar que el sistema es capaz de localizar al usuario en la base de datos y validar correctamente sus datos de acceso.
+#### Control de acceso (exito.php):
+El archivo exito.php comprueba si existe una sesión activa. Si el usuario no ha iniciado sesión correctamente, se bloquea el acceso mostrando un mensaje de error. Si la sesión existe, se muestra un mensaje confirmando que el acceso ha sido correcto.
 
-3. Comprobación de inicio de sesión fallido
+#### Diagrama del sistema:
+El diagrama proporcionado representa visualmente el flujo del sistema:
+- Login > Comprobación
+- Si es correcto > Éxito > Panel
+- Si es incorrecto > No éxito > Login
 
-Se ejecuta el script 004-comprobacion fallida.sql utilizando credenciales incorrectas:
+Este diagrama ayuda a entender la arquitectura general del sistema y el recorrido que siguen los datos durante el proceso de autenticación.
 
-Usuario: jlopez
-
-Contraseña: 1234seguraZ
-
-Esta comprobación permite observar cómo el sistema gestiona un intento de acceso erróneo, devolviendo un resultado vacío o un mensaje de error, lo que demuestra que la validación se realiza de forma correcta.
-
-4. Procesamiento de datos con procesa.php
-
-Se revisa el archivo procesa.php, el cual se encarga de establecer la conexión con la base de datos y procesar los datos enviados desde el formulario de inicio de sesión. Este script recibe el usuario y la contraseña introducidos, ejecuta la consulta correspondiente y envía el resultado al sistema de validación.
-
-Este archivo constituye el núcleo lógico del sistema de autenticación.
-
-5. Formulario de inicio de sesión con login.html
-
-Se analiza el archivo login.html, que contiene el formulario donde el usuario introduce sus credenciales. El formulario está configurado para enviar los datos al archivo procesa.php mediante el método correspondiente al enviar la información.
-
-Este archivo representa la interfaz de acceso al sistema.
-
-6. Validación final con exito.php
-
-El archivo exito.php contiene la lógica que comprueba si el usuario ha iniciado sesión correctamente y muestra un mensaje de éxito en caso afirmativo. Este script se encarga de interpretar el resultado devuelto por procesa.php y determinar si el acceso es válido o no.
-
-7. Revisión del diagrama exportado
-
-Se revisan los archivos diagrama.html, diagrama.svg y diagrama.json, los cuales representan de forma visual el diseño del sistema de inicio de sesión. Estos diagramas permiten comprender la arquitectura general del proyecto, así como la relación entre los distintos componentes.
 
 ---
-Como resultado del ejercicio, se obtiene un sistema funcional de inicio de sesión que permite validar credenciales almacenadas en una base de datos. El sistema es capaz de gestionar tanto accesos correctos como intentos fallidos, mostrando el comportamiento esperado en cada caso.
+A continuación se describen los pasos realizados para implementar y comprobar el funcionamiento del sistema.
 
-En este ejercicio se han aplicado los conceptos fundamentales de autenticación de usuarios mediante bases de datos, integrando consultas SQL, scripts en PHP y formularios HTML para construir un sistema completo de inicio de sesión. Esta práctica permite comprender cómo se validan credenciales, cómo se gestionan accesos correctos e incorrectos y cómo se estructura una aplicación web segura desde el punto de vista de la autenticación. Asimismo, refuerza el uso de bases de datos y programación web como herramientas esenciales en el desarrollo de sistemas de información modernos.
+### Creación de la base de datos y la tabla de usuarios
+```
+CREATE DATABASE IF NOT EXISTS superaplicacion
+    CHARACTER SET utf8mb4
+    COLLATE utf8mb4_unicode_ci;
+
+USE superaplicacion;
+
+CREATE TABLE IF NOT EXISTS usuarios (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    usuario VARCHAR(50) NOT NULL UNIQUE,
+    contrasena VARCHAR(255) NOT NULL,
+    nombrecompleto VARCHAR(150) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    creado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+```
+
+#### Inserción de usuarios de prueba
+```
+INSERT INTO usuarios (usuario, contrasena, nombrecompleto, email)
+VALUES
+('jlopez', '1234segura', 'Juan López Martínez', 'juan.lopez@example.com'),
+('mgarcia', 'clave2025', 'María García Sánchez', 'maria.garcia@example.com');
+```
+
+#### Comprobación exitosa
+Se ejecuta la consulta con las credenciales correctas:
+```
+SELECT *
+FROM usuarios
+WHERE usuario = 'jlopez'
+AND contrasena = '1234segura';
+```
+El resultado devuelve un registro, lo que indica que el inicio de sesión es válido.
+
+#### Comprobación fallida
+Se ejecuta la consulta con una contraseña incorrecta:
+```
+SELECT *
+FROM usuarios
+WHERE usuario = 'jlopez'
+AND contrasena = '1234seguraZ';
+```
+En este caso no se obtiene ningún resultado, por lo que el sistema detecta un intento de acceso fallido.
+
+Flujo completo del sistema:
+1.-El usuario introduce sus datos en login.html.
+2.-Los datos se envían a procesa.php.
+3.-Se consulta la base de datos.
+4.-Si las credenciales son correctas, se crea una sesión y se redirige a exito.php.
+5.-Si las credenciales son incorrectas, se vuelve al formulario de login.
+
+---
+Este ejercicio permite comprender de forma práctica cómo funciona un sistema de autenticación de usuarios basado en una base de datos. A través de la creación de la base de datos, el diseño del formulario, el procesamiento de datos con PHP y la validación mediante consultas SQL, se refuerza el concepto de control de acceso y gestión de sesiones. Este tipo de sistemas es fundamental en cualquier aplicación web que requiera identificar a sus usuarios, proteger información sensible y garantizar un acceso seguro. Además, los conocimientos adquiridos en esta práctica pueden aplicarse directamente en proyectos reales como plataformas educativas, tiendas online o sistemas de gestión empresarial.
