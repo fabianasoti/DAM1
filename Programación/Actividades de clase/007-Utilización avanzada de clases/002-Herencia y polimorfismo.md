@@ -1,4 +1,19 @@
-En este ejercicio se trabaja el concepto de herencia y polimorfismo en Python a través de un contexto práctico: la organización de un taller de programación para personas interesadas en actividades creativas como el crocheting o el arte latte. La herencia permite crear nuevas clases a partir de una clase base, reutilizando sus atributos y métodos, mientras que el polimorfismo permite que un mismo método se comporte de forma diferente según la clase que lo implemente. En este caso, se define una clase base llamada Persona y dos subclases llamadas Profesor y Alumno, que heredan sus propiedades básicas y redefinen el método dameDatos() para mostrar información personalizada. El objetivo del ejercicio es comprender cómo aplicar estos conceptos para modelar distintos tipos de personas dentro de un sistema.
+```
+''' 
+Herencia y polimorfismo
+2026 Fabiana Sotillo
+Programa que define una clase Persona y dos subclases (Profesor y Alumno),
+aplicando para mostrar los datos de los participantes
+de un taller de programación.
+'''
+```
+
+---
+En este ejercicio se trabaja el concepto de herencia y polimorfismo en Python a través de un contexto práctico: la organización de un taller de programación para personas interesadas en actividades creativas como el crochet. 
+
+La herencia permite crear nuevas clases a partir de una clase base, reutilizando sus atributos y métodos, mientras que el polimorfismo permite que un mismo método se comporte de forma diferente según la clase que lo implemente. En este caso, se define una clase base llamada Persona y dos subclases llamadas Profesor y Alumno, que heredan sus propiedades básicas y redefinen el método dameDatos() para mostrar información personalizada. 
+
+El objetivo del ejercicio es comprender cómo aplicar estos conceptos para modelar distintos tipos de personas dentro de un sistema.
 
 Para resolver el ejercicio se ha definido una clase base Persona que contiene los atributos comunes nombre y apellidos, así como un método dameDatos() que devuelve una cadena con dichos datos. A partir de esta clase se crean dos subclases: Profesor y Alumno.
 
@@ -8,18 +23,64 @@ De este modo, se consigue que un profesor y un alumno puedan ser tratados como p
 
 ---
 
-Se define la clase Persona con un constructor que inicializa el nombre y los apellidos.
+- Se define la clase Persona con un constructor que inicializa el nombre y los apellidos.
+```
+class Persona():
+    def __init__(self, nombre, apellidos):
+        self.nombre = nombre
+        self.apellidos = apellidos
+```
+- Se define el método dameDatos() que devuelve una cadena con los datos de la persona.
+```
+ def dameDatos(self):
+        return self.nombre + " " + self.apellidos
+```
+- Las clases Profesor y Alumno heredan de Persona usando super().
+```
+class Profesor(Persona):
+    # Se añade 'hobbie' como parámetro en el constructor
+    def __init__(self, nombre, apellidos, hobbie):
+        super().__init__(nombre, apellidos)
+				self.hobbie = hobbie
+				
+class Alumno(Persona):
+    def __init__(self, nombre, apellidos, hobbie):
+        super().__init__(nombre, apellidos)
+				self.hobbie = hobbie
+```
+- Ambas subclases redefinen el método dameDatos() aplicando polimorfismo al añadir la propiedad de hobbie.
+```
+class Profesor(Persona):
+    # Se añade 'hobbie' como parámetro en el constructor
+    def __init__(self, nombre, apellidos, hobbie):
+        super().__init__(nombre, apellidos)
+				self.hobbie = hobbie
 
-Se define el método dameDatos() que devuelve una cadena con los datos de la persona.
+    def dameDatos(self):
+        return "Profesor: " + self.nombre + " " + self.apellidos + "Hobbie: " + self.hobbie
 
-Las clases Profesor y Alumno heredan de Persona usando super().
 
-Ambas subclases redefinen el método dameDatos() aplicando polimorfismo.
+class Alumno(Persona):
+    def __init__(self, nombre, apellidos, hobbie):
+        super().__init__(nombre, apellidos)
+				self.hobbie = hobbie
 
-Se crean dos objetos, uno de tipo Alumno y otro de tipo Profesor.
-
-Se imprimen sus datos para comprobar el funcionamiento correcto.
-
+    def dameDatos(self):
+        return "Alumno: " + self.nombre + " " + self.apellidos + "Hobbie: " + self.hobbie
+```
+- Se crean dos objetos, uno de tipo Alumno y otro de tipo Profesor.
+```
+# Creación de objetos
+alumno1 = Alumno("Susana", "Horia", "Crochet")
+profesor1 = Profesor("Esteban", "Quito", "Senderismo")
+```
+- Se imprimen sus datos para comprobar el funcionamiento correcto.
+```
+# Mostrar datos
+print(alumno1.dameDatos())
+print(profesor1.dameDatos())
+```
+---
 A continuación se muestra el código completo y funcional:
 
 ```
@@ -41,24 +102,27 @@ class Persona():
 
 
 class Profesor(Persona):
-    def __init__(self, nombre, apellidos):
+    # Se añade 'hobbie' como parámetro en el constructor
+    def __init__(self, nombre, apellidos, hobbie):
         super().__init__(nombre, apellidos)
+				self.hobbie = hobbie
 
     def dameDatos(self):
-        return "Profesor: " + self.nombre + " " + self.apellidos
+        return "Profesor: " + self.nombre + " " + self.apellidos + "Hobbie: " + self.hobbie
 
 
 class Alumno(Persona):
-    def __init__(self, nombre, apellidos):
+    def __init__(self, nombre, apellidos, hobbie):
         super().__init__(nombre, apellidos)
+				self.hobbie = hobbie
 
     def dameDatos(self):
-        return "Alumno: " + self.nombre + " " + self.apellidos
+        return "Alumno: " + self.nombre + " " + self.apellidos + "Hobbie: " + self.hobbie
 
 
 # Creación de objetos
-alumno1 = Alumno("Jose Vicente", "Carratala")
-profesor1 = Profesor("Juan", "Garcia")
+alumno1 = Alumno("Susana", "Horia", "Crochet")
+profesor1 = Profesor("Esteban", "Quito", "Senderismo")
 
 # Mostrar datos
 print(alumno1.dameDatos())
@@ -66,4 +130,10 @@ print(profesor1.dameDatos())
 ```
 
 ---
-En este ejercicio se han aplicado los conceptos de herencia y polimorfismo para modelar un sistema sencillo de gestión de personas dentro de un taller de programación con intereses creativos como el crocheting o el arte latte. La herencia permite reutilizar código común en la clase Persona, mientras que el polimorfismo permite personalizar el comportamiento del método dameDatos() según el tipo de objeto. Estos conceptos son fundamentales en la programación orientada a objetos y pueden aplicarse en sistemas reales como plataformas educativas, sistemas de gestión escolar o aplicaciones laborales, donde distintos tipos de usuarios comparten características comunes pero requieren comportamientos específicos. Su correcta aplicación facilita la organización del código, mejora su reutilización y permite crear programas más estructurados y escalables.
+En este ejercicio se han aplicado los conceptos de herencia y polimorfismo para modelar un sistema sencillo de gestión de personas dentro de un taller de programación con intereses creativos como el crocheting o el arte latte. 
+
+La herencia permite reutilizar código común en la clase Persona, mientras que el polimorfismo permite personalizar el comportamiento del método dameDatos() según el tipo de objeto. 
+
+Estos conceptos son fundamentales en la programación orientada a objetos y pueden aplicarse en sistemas reales como plataformas educativas, sistemas de gestión escolar o aplicaciones laborales, donde distintos tipos de usuarios comparten características comunes pero requieren comportamientos específicos. 
+
+Su correcta aplicación facilita la organización del código, mejora su reutilización y permite crear programas más estructurados y escalables.

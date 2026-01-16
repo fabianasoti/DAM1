@@ -1,0 +1,105 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Reloj con temporizador</title>
+</head>
+<body>
+
+<canvas id="reloj"></canvas>
+
+<script>
+/*
+Reloj analógico con temporizador
+2026 Fabiana Victoria Sotillo
+Programa que muestra un reloj analógico utilizando un temporizador asíncrono
+que se actualiza cada segundo mediante el contexto 2D de Canvas.
+*/
+
+let temporizador = null; // Temporizador inicialmente desactivado
+let lienzo = document.getElementById("reloj");
+lienzo.width = 500;
+lienzo.height = 500;
+
+let contexto = lienzo.getContext("2d");
+contexto.lineCap = "round";
+
+// Función principal del bucle
+function bucle() {
+    let fecha = new Date();
+
+    let hora = fecha.getHours();
+    let minuto = fecha.getMinutes();
+    let segundo = fecha.getSeconds();
+
+    // Limpiar el lienzo
+    contexto.clearRect(0, 0, lienzo.width, lienzo.height);
+
+    let centroX = lienzo.width / 2;
+    let centroY = lienzo.height / 2;
+
+    // Manecilla de la hora
+    contexto.lineWidth = 35;
+    contexto.strokeStyle = "purple";
+    let anguloHora = hora * (Math.PI * 2 / 12) - Math.PI / 2;
+
+    contexto.beginPath();
+    contexto.moveTo(centroX, centroY);
+    contexto.lineTo(
+        centroX + Math.cos(anguloHora) * 90,
+        centroY + Math.sin(anguloHora) * 90
+    );
+    contexto.stroke();
+
+    // Manecilla de los minutos
+    contexto.lineWidth = 20;
+    contexto.strokeStyle = "orange";
+    let anguloMinuto = minuto * (Math.PI * 2 / 60) - Math.PI / 2;
+
+    contexto.beginPath();
+    contexto.moveTo(centroX, centroY);
+    contexto.lineTo(
+        centroX + Math.cos(anguloMinuto) * 140,
+        centroY + Math.sin(anguloMinuto) * 140
+    );
+    contexto.stroke();
+
+    // Manecilla de los segundos
+    contexto.lineWidth = 4;
+    contexto.strokeStyle = "black";
+    let anguloSegundo = segundo * (Math.PI * 2 / 60) - Math.PI / 2;
+
+    contexto.beginPath();
+    contexto.moveTo(centroX, centroY);
+    contexto.lineTo(
+        centroX + Math.cos(anguloSegundo) * 180,
+        centroY + Math.sin(anguloSegundo) * 180
+    );
+    contexto.stroke();
+
+    // Círculo central
+    contexto.fillStyle = "black";
+    contexto.beginPath();
+    contexto.arc(centroX, centroY, 10, 0, Math.PI * 2);
+    contexto.fill();
+
+    // Marco exterior del reloj
+    contexto.lineWidth = 15;
+    contexto.strokeStyle = "gray";
+    contexto.beginPath();
+    contexto.arc(centroX, centroY, 200, 0, Math.PI * 2);
+    contexto.stroke();
+
+    // Reinicio del temporizador
+    clearTimeout(temporizador);
+    temporizador = setTimeout(bucle, 1000);
+}
+
+// Activar temporizador
+temporizador = setTimeout(bucle, 1000);
+
+</script>
+
+</body>
+</html>
+
