@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>POS Restaurante</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .pos-container {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+        }
+
+        .products, .order {
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .product-btn {
+            width: 100%;
+            padding: 15px;
+            margin: 5px 0;
+            font-size: 18px;
+            cursor: pointer;
+            background: #3498db;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+        }
+
+        .product-btn:hover {
+            background: #2980b9;
+        }
+
+        .order ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .order li {
+            padding: 8px 0;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .total {
+            font-size: 20px;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        .send-btn {
+            margin-top: 15px;
+            padding: 15px;
+            width: 100%;
+            font-size: 18px;
+            background: #27ae60;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .send-btn:hover {
+            background: #219150;
+        }
+
+        select {
+            padding: 10px;
+            font-size: 16px;
+            margin-bottom: 10px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+<h1>POS Restaurante - Comandas</h1>
+
+<div class="pos-container">
+
+    <!-- Productos -->
+    <div class="products">
+        <h2>Productos</h2>
+
+        <button class="product-btn" onclick="addProduct('Hamburguesa', 8)">Hamburguesa - 8€</button>
+        <button class="product-btn" onclick="addProduct('Pizza', 10)">Pizza - 10€</button>
+        <button class="product-btn" onclick="addProduct('Ensalada', 6)">Ensalada - 6€</button>
+        <button class="product-btn" onclick="addProduct('Refresco', 2)">Refresco - 2€</button>
+        <button class="product-btn" onclick="addProduct('Café', 1.5)">Café - 1.50€</button>
+    </div>
+
+    <!-- Comanda -->
+    <div class="order">
+        <h2>Comanda</h2>
+
+        <select id="tableSelect">
+            <option value="">Seleccionar mesa</option>
+            <option>Mesa 1</option>
+            <option>Mesa 2</option>
+            <option>Mesa 3</option>
+            <option>Mesa 4</option>
+        </select>
+
+        <ul id="orderList"></ul>
+
+        <div class="total">Total: €<span id="total">0.00</span></div>
+
+        <button class="send-btn" onclick="sendOrder()">Enviar a cocina</button>
+    </div>
+</body>
+</html>
+
