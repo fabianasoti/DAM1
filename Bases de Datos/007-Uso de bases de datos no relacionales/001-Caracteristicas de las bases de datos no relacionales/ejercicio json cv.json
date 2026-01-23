@@ -1,0 +1,37 @@
+{
+  "curriculum": {
+    "datosPersonales": {
+      "nombre": "Fabiana Victoria",
+      "apellidos": "Sotillo",
+      "telefono": "+34 663966940"
+    },
+    "competencias": {
+      "tecnicas": [
+        "MySQL",
+        "Python",
+        "HTML y CSS",
+        "Microsoft Office",
+        "Warehouse Management OS"
+      ],
+      "personales": [
+        "Empatía y comunicación efectiva",
+        "Organización y gestión eficiente de tareas y prioridades",
+        "Puntualidad y responsabilidad en la entrega de resultados",
+        "Capacidad resolutiva y adaptable",
+        "Colaboración y trabajo en equipo"
+      ],
+      "idiomas": [
+        {
+          "idioma": "Inglés",
+          "nivel": "Avanzado"
+        },
+        {
+          "idioma": "Español",
+          "nivel": "Nativo"
+        }
+      ]
+    },
+    "sobreMi": "Profesional proactiva con experiencia en atención al cliente y análisis de existencias. En formación en Desarrollo de Aplicaciones Multiplataforma (DAM), con interés en el sector tecnológico. Destaco por mi adaptabilidad, comunicación y trabajo en equipo. Comprometida con el aprendizaje continuo y la mejora de procesos."
+  }
+}
+
