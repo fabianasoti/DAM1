@@ -1,26 +1,4 @@
-<!doctype html>
-<html>
-  <head>
-    	<meta charset="utf-8">
-  </head>
-  <body>
-    <div class="fabicarrusel">
-      <img src="5tC_A_wgQYw.jpg" alt="Texto alternativo">
-      <img src="7FBOjrjU7hw.jpg" alt="Texto alternativo">
-      <img src="9oxNiLHOsXM.jpg" alt="Texto alternativo">
-      <img src="56jDEvDWsdA.jpg" alt="Texto alternativo">
-      <img src="a9vOpco5Jg0.jpg" alt="Texto alternativo">
-      <img src="aeA7YvJCKwk.jpg" alt="Texto alternativo">
-      <img src="C3In5jD7lJA.jpg" alt="Texto alternativo">
-      <img src="cVfmrb97Wt0.jpg" alt="Texto alternativo">
-    </div>
-    <style>
-      .fabicarrusel{width:1280px;height:820px;overflow:hidden;}
-      .fabicarrusel section{width:8960px;display:flex;left:0px;transition:all 1s;position:relative;}
-      .fabicarrusel section img{width:1280px;height:720px;}
-    </style>
-    <script>
-      // Cojo el contenedor externo (es un solo elemento)
+// Cojo el contenedor externo (es un solo elemento)
       let contenedor = document.querySelector(".fabicarrusel");
       // Cojo las imagenes de dentro (es un array de elementos)
       let contenido = document.querySelectorAll(".fabicarrusel img")
@@ -62,6 +40,3 @@
         // Actualizo la posicion del nuevo contenedor
       	nuevo_contenedor.style.left = contador*anchura+"px"
       }
-    </script>
-  </body>
-</html>
