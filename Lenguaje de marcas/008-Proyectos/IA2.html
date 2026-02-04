@@ -1,0 +1,522 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Super Platformer: Final Level</title>
+<style>
+  body {
+    margin: 0;
+    background-color: #111;
+    font-family: 'Verdana', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  #contenedor-juego {
+    position: relative;
+    width: 850px;
+    height: 480px;
+    box-shadow: 0 0 40px rgba(0, 200, 255, 0.2);
+    border: 8px solid #333;
+    border-radius: 10px;
+    background-color: #000;
+    overflow: hidden;
+  }
+
+  canvas {
+    display: block;
+    /* El fondo se dibuja en el canvas, pero ponemos un color base por si acaso */
+    background-color: #87ceeb; 
+    image-rendering: pixelated; /* Para que los sprites no se vean borrosos al escalar */
+  }
+
+  /* Capa de Interfaz (UI) */
+  #ui-layer {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .panel-mensaje {
+    background: linear-gradient(to bottom, #2b5876, #4e4376);
+    color: white;
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+    border: 4px solid #fff;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+    pointer-events: auto;
+    display: none;
+    animation: zoomIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+
+  h1 { margin: 0 0 15px 0; font-size: 48px; text-transform: uppercase; text-shadow: 3px 3px 0 #000; }
+  p { font-size: 24px; margin-bottom: 25px; }
+
+  button {
+    background: #ff9f43;
+    border: none;
+    color: #fff;
+    padding: 15px 30px;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 50px;
+    box-shadow: 0 6px 0 #e67e22;
+    transition: all 0.1s;
+  }
+  button:hover { background: #ffaf40; margin-top: -2px; box-shadow: 0 8px 0 #e67e22; }
+  button:active { transform: translateY(4px); box-shadow: 0 2px 0 #e67e22; }
+
+  #hud {
+    position: absolute;
+    top: 15px; left: 15px;
+    background: rgba(0,0,0,0.5);
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-size: 24px;
+    font-weight: bold;
+    color: #fff;
+    pointer-events: none;
+    border: 2px solid rgba(255,255,255,0.3);
+  }
+
+  @keyframes zoomIn {
+    from { transform: scale(0); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+  }
+</style>
+</head>
+
+<body>
+
+<div id="contenedor-juego">
+  <canvas id="miCanvas"></canvas>
+  
+  <div id="hud">
+    <span style="color:red">❤</span> x <span id="vidasDisplay">3</span>
+  </div>
+
+  <div id="ui-layer">
+    <div id="pantalla-gameover" class="panel-mensaje">
+      <h1 style="color: #ff6b6b;">GAME OVER</h1>
+      <p>¡Te han derrotado!</p>
+      <button onclick="reiniciarJuego()">Try Again :(</button>
+    </div>
+
+    <div id="pantalla-victoria" class="panel-mensaje">
+      <h1 style="color: #feca57;">¡¡¡ESOOOO!!!</h1>
+      <p>¡Nivel Completado!</p>
+      <button onclick="reiniciarJuego()">Jugar de nuevo</button>
+    </div>
+  </div>
+</div>
+
+<script>
+
+// =====================
+// CONFIGURACIÓN
+// =====================
+const canvas = document.getElementById("miCanvas");
+const ctx = canvas.getContext("2d");
+
+// Desactivar suavizado para estética retro nítida
+ctx.imageSmoothingEnabled = false;
+
+canvas.width = 850;
+canvas.height = 480;
+
+const GRAVEDAD = 0.9;
+const VELOCIDAD_JUGADOR = 6;
+const SALTO = -16;
+
+let juegoActivo = true;
+let frameId;
+let camaraX = 0;
+let maxCamaraX = 3000; // Límite derecho del nivel
+
+// Carga de Sprites
+const imgJugador = new Image(); imgJugador.src = "sprite.png";
+const imgEnemigo = new Image(); imgEnemigo.src = "spritenpc.png";
+
+// =====================
+// CLASES
+// =====================
+
+class Jugador {
+  constructor() {
+    // Aumentamos el tamaño visual
+    this.w = 48; 
+    this.h = 48;
+    this.reiniciar();
+    this.vidas = 3;
+    this.invulnerable = 0;
+  }
+
+  reiniciar() {
+    this.x = 100;
+    this.y = 300;
+    this.vx = 0;
+    this.vy = 0;
+    this.enSuelo = false;
+    this.mirandoDerecha = true;
+  }
+
+  actualizar() {
+    // Input
+    if (teclas.izquierda) { this.vx = -VELOCIDAD_JUGADOR; this.mirandoDerecha = false; }
+    else if (teclas.derecha) { this.vx = VELOCIDAD_JUGADOR; this.mirandoDerecha = true; }
+    else { this.vx = 0; }
+
+    // Salto
+    if (teclas.arriba && this.enSuelo) {
+      this.vy = SALTO;
+      this.enSuelo = false;
+    }
+
+    // Físicas
+    this.vy += GRAVEDAD;
+    this.x += this.vx;
+    this.y += this.vy;
+
+    this.enSuelo = false;
+    
+    // Colisión Plataformas
+    plataformas.forEach(p => {
+      // Un margen interno pequeño para que no colisione con los bordes al saltar justo al lado
+      if (this.x + 10 < p.x + p.w && this.x + this.w - 10 > p.x &&
+          this.y < p.y + p.h && this.y + this.h > p.y) {
+        
+        let overlapY = (this.h + p.h)/2 - Math.abs((this.y + this.h/2) - (p.y + p.h/2));
+        
+        if (overlapY > 0) { // Priorizamos corrección vertical si venimos de arriba
+             if (this.vy >= 0 && this.y + this.h - this.vy <= p.y + 10) { 
+                this.y = p.y - this.h;
+                this.vy = 0;
+                this.enSuelo = true;
+             } else if (this.y > p.y) { // Golpe cabeza
+                 this.y = p.y + p.h;
+                 this.vy = 0;
+             }
+        }
+      }
+    });
+
+    // Límites y Muerte por caída
+    if (this.x < 0) this.x = 0;
+    if (this.y > canvas.height + 200) this.morir();
+
+    if(this.invulnerable > 0) this.invulnerable--;
+  }
+
+  dibujar(ctx, offsetX) {
+    if(this.invulnerable > 0 && Math.floor(Date.now() / 100) % 2 === 0) return;
+
+    let rx = this.x - offsetX;
+    let ry = this.y;
+
+    if (imgJugador.complete && imgJugador.naturalHeight !== 0) {
+        ctx.save();
+        if(!this.mirandoDerecha){
+            ctx.translate(rx + this.w, ry);
+            ctx.scale(-1, 1);
+            ctx.drawImage(imgJugador, 0, 0, this.w, this.h);
+        } else {
+            ctx.drawImage(imgJugador, rx, ry, this.w, this.h);
+        }
+        ctx.restore();
+    } else {
+        // Fallback bonito
+        ctx.fillStyle = "#f1c40f";
+        ctx.beginPath(); ctx.arc(rx + this.w/2, ry + this.h/2, this.w/2, 0, Math.PI*2); ctx.fill();
+        ctx.fillStyle = "#000"; 
+        // Ojos
+        let ojoX = this.mirandoDerecha ? rx + 30 : rx + 10;
+        ctx.fillRect(ojoX, ry + 15, 8, 8);
+    }
+  }
+
+  recibirDaño() {
+      if(this.invulnerable > 0) return;
+      this.vidas--;
+      actualizarHUD();
+      this.vy = -8; 
+      this.invulnerable = 60;
+      if(this.vidas <= 0) gameOver();
+  }
+
+  morir() { this.vidas = 0; actualizarHUD(); gameOver(); }
+}
+
+class Enemigo {
+  constructor(x, y, rango) {
+    this.x = x; this.y = y; this.inicioX = x;
+    this.w = 40; this.h = 40;
+    this.vx = -3; this.rango = rango || 150;
+    this.muerto = false;
+  }
+
+  actualizar() {
+    if(this.muerto) return;
+    this.x += this.vx;
+    if (this.x < this.inicioX - this.rango || this.x > this.inicioX + this.rango) this.vx *= -1;
+  }
+
+  dibujar(ctx, offsetX) {
+    if(this.muerto) return;
+    let rx = this.x - offsetX;
+    if(rx > -50 && rx < canvas.width + 50) {
+        if (imgEnemigo.complete && imgEnemigo.naturalHeight !== 0) {
+             ctx.drawImage(imgEnemigo, rx, this.y, this.w, this.h);
+        } else {
+             // Fallback Fantasma
+             ctx.fillStyle = "#e74c3c";
+             ctx.beginPath();
+             ctx.arc(rx+20, this.y+20, 20, Math.PI, 0);
+             ctx.lineTo(rx+40, this.y+40);
+             ctx.lineTo(rx, this.y+40);
+             ctx.fill();
+        }
+    }
+  }
+}
+
+class Plataforma {
+  constructor(x, y, w, h) {
+    this.x = x; this.y = y; this.w = w; this.h = h;
+  }
+  dibujar(ctx, offsetX) {
+      let rx = this.x - offsetX;
+      if(rx + this.w < 0 || rx > canvas.width) return;
+
+      // Dibujar Tierra
+      ctx.fillStyle = "#5d4037"; // Marrón oscuro
+      ctx.fillRect(rx, this.y, this.w, this.h);
+
+      // Dibujar Césped (Borde superior)
+      ctx.fillStyle = "#6ab04c"; // Verde bonito
+      ctx.fillRect(rx, this.y, this.w, 15); // Los primeros 15px son pasto
+      
+      // Detalle borde
+      ctx.strokeStyle = "#2d3436";
+      ctx.lineWidth = 2;
+      ctx.strokeRect(rx, this.y, this.w, this.h);
+  }
+}
+
+class Bandera {
+    constructor(x, y) {
+        this.x = x; this.y = y;
+        this.w = 60; this.h = 200;
+        this.color = "#fbc531";
+    }
+    dibujar(ctx, offsetX) {
+        let rx = this.x - offsetX;
+        // Poste
+        ctx.fillStyle = "#ecf0f1";
+        ctx.fillRect(rx, this.y, 10, this.h);
+        ctx.fillStyle = "#7f8c8d"; // Base
+        ctx.fillRect(rx - 10, this.y + this.h - 10, 30, 10);
+        
+        // Bandera ondeando
+        ctx.fillStyle = this.color;
+        ctx.beginPath();
+        ctx.moveTo(rx + 10, this.y + 10);
+        ctx.lineTo(rx + 90, this.y + 40);
+        ctx.lineTo(rx + 10, this.y + 70);
+        ctx.fill();
+        
+        // Texto META
+        ctx.fillStyle = "black";
+        ctx.font = "12px Arial";
+        ctx.fillText("FIN", rx + 15, this.y + 45);
+    }
+}
+
+// =====================
+// FONDO (Decoración)
+// =====================
+function dibujarFondo(camX) {
+    // Cielo Gradiente
+    let grad = ctx.createLinearGradient(0, 0, 0, canvas.height);
+    grad.addColorStop(0, "#87CEEB");
+    grad.addColorStop(1, "#E0F7FA");
+    ctx.fillStyle = grad;
+    ctx.fillRect(0,0, canvas.width, canvas.height);
+
+    // Montañas (Parallax) - Se mueven más lento (camX * 0.2)
+    ctx.fillStyle = "#a2d149"; // Montañas verdes lejos
+    ctx.beginPath();
+    ctx.moveTo(0, 480);
+    // Generar picos basados en la cámara
+    for(let i = -100; i < canvas.width + 100; i+=200) {
+        let xPos = i - (camX * 0.2) % 200; 
+        // Corrección para bucle infinito visual
+        if(xPos < -200) xPos += canvas.width + 400;
+        
+        ctx.lineTo(xPos + 100, 300);
+        ctx.lineTo(xPos + 200, 480);
+    }
+    ctx.fill();
+    
+    // Nubes
+    ctx.fillStyle = "rgba(255,255,255,0.6)";
+    let nubesOffset = (Date.now() * 0.02) + (camX * 0.1); // Se mueven solas y con cámara
+    ctx.beginPath();
+    ctx.arc(100 - (nubesOffset % 900), 100, 40, 0, Math.PI*2);
+    ctx.arc(400 - (nubesOffset % 900), 150, 50, 0, Math.PI*2);
+    ctx.arc(750 - (nubesOffset % 900), 80, 60, 0, Math.PI*2);
+    ctx.fill();
+}
+
+// =====================
+// ESTADO Y MAPA
+// =====================
+
+let jugador = new Jugador();
+let plataformas = [];
+let enemigos = [];
+let bandera;
+let teclas = { izquierda: false, derecha: false, arriba: false };
+
+function crearNivel() {
+    plataformas = [];
+    enemigos = [];
+    
+    // Suelo inicial
+    plataformas.push(new Plataforma(0, 400, 600, 80)); 
+    
+    // Escaleras flotantes
+    plataformas.push(new Plataforma(650, 320, 150, 40));
+    plataformas.push(new Plataforma(850, 240, 150, 40));
+    
+    // Isla larga con enemigos
+    plataformas.push(new Plataforma(1100, 350, 600, 50));
+    enemigos.push(new Enemigo(1200, 310, 100)); // Enemigo 1
+    enemigos.push(new Enemigo(1500, 310, 100)); // Enemigo 2
+    
+    // El "Pozo de la Muerte" y plataforma alta
+    plataformas.push(new Plataforma(1800, 200, 100, 40)); 
+    enemigos.push(new Enemigo(1820, 160, 20)); // Enemigo molesto en plataforma pequeña
+
+    // Camino final
+    plataformas.push(new Plataforma(2000, 380, 800, 100));
+    // Bloques tipo escalera
+    plataformas.push(new Plataforma(2300, 300, 50, 50));
+    plataformas.push(new Plataforma(2350, 250, 50, 50));
+    plataformas.push(new Plataforma(2400, 200, 50, 50));
+    
+    // Plataforma Meta
+    plataformas.push(new Plataforma(2600, 200, 400, 50));
+    
+    // Crear la Bandera al final
+    bandera = new Bandera(2800, 0); // La Y se ajusta visualmente
+}
+
+function bucle() {
+    if (!juegoActivo) return;
+
+    // 1. Lógica
+    jugador.actualizar();
+    
+    // Cámara
+    let targetX = jugador.x - 200;
+    if(targetX < 0) targetX = 0;
+    if(targetX > 2200) targetX = 2200; // Tope del nivel
+    camaraX += (targetX - camaraX) * 0.1; // Suavizado
+
+    // 2. Dibujar
+    ctx.clearRect(0,0,canvas.width, canvas.height);
+    
+    dibujarFondo(camaraX); // Fondo bonito
+    
+    plataformas.forEach(p => p.dibujar(ctx, camaraX));
+    bandera.dibujar(ctx, camaraX);
+    
+    enemigos.forEach(e => {
+        if(!e.muerto) {
+            e.actualizar();
+            e.dibujar(ctx, camaraX);
+            // Colisiones Enemigos
+            if (colision(jugador, e)) {
+                if (jugador.vy > 0 && jugador.y + jugador.h < e.y + e.h/2 + 10) {
+                    e.muerto = true;
+                    jugador.vy = -10; // Rebote fuerte
+                } else {
+                    jugador.recibirDaño();
+                }
+            }
+        }
+    });
+
+    jugador.dibujar(ctx, camaraX);
+
+    // 3. Verificar Victoria (Colisión con bandera)
+    if (jugador.x + jugador.w > bandera.x && jugador.x < bandera.x + 20) {
+        if(jugador.y < bandera.y + bandera.h) {
+            victoria();
+        }
+    }
+
+    frameId = requestAnimationFrame(bucle);
+}
+
+// Helpers
+function colision(a, b) {
+    return (a.x < b.x + b.w && a.x + a.w > b.x && a.y < b.y + b.h && a.y + a.h > b.y);
+}
+
+function actualizarHUD() {
+    document.getElementById("vidasDisplay").innerText = jugador.vidas;
+}
+
+function gameOver() {
+    juegoActivo = false;
+    document.getElementById("pantalla-gameover").style.display = "block";
+}
+
+function victoria() {
+    juegoActivo = false;
+    document.getElementById("pantalla-victoria").style.display = "block";
+}
+
+function reiniciarJuego() {
+    document.querySelectorAll(".panel-mensaje").forEach(el => el.style.display = "none");
+    juegoActivo = true;
+    camaraX = 0;
+    jugador.vidas = 3;
+    jugador.reiniciar();
+    crearNivel();
+    actualizarHUD();
+    cancelAnimationFrame(frameId);
+    bucle();
+}
+
+// Input
+window.addEventListener("keydown", e => {
+    if (e.key === "a" || e.key === "ArrowLeft") teclas.izquierda = true;
+    if (e.key === "d" || e.key === "ArrowRight") teclas.derecha = true;
+    if (e.key === "w" || e.key === "ArrowUp" || e.key === " ") teclas.arriba = true;
+});
+window.addEventListener("keyup", e => {
+    if (e.key === "a" || e.key === "ArrowLeft") teclas.izquierda = false;
+    if (e.key === "d" || e.key === "ArrowRight") teclas.derecha = false;
+    if (e.key === "w" || e.key === "ArrowUp" || e.key === " ") teclas.arriba = false;
+});
+
+// Start
+crearNivel();
+actualizarHUD();
+bucle();
+
+</script>
+</body>
+</html>
