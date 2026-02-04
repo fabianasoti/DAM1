@@ -1,0 +1,120 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <style>
+      body{
+        background:#0f172a;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        height:100vh;
+        margin:0;
+        font-family: system-ui, -apple-system, Segoe UI, sans-serif;
+      }
+      canvas{
+        background:#0b1220;
+        border-radius:16px;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+      }
+    </style>
+  </head>
+  <body>
+    <canvas></canvas>
+    <script>
+      const lienzo = document.querySelector("canvas");
+      const ctx = lienzo.getContext("2d");
+      lienzo.width = 360;
+      lienzo.height = 360;
+
+      const cx = lienzo.width / 2;
+      const cy = lienzo.height / 2;
+
+      const colores = [
+        "#0B3C5D", "#2A6F97", "#48CAE4", "#52B788", "#7B2CBF"
+      ];
+
+      const coloresTexto = [
+        "#FFFFFF", "#FFFFFF", "#1F2933", "#1F2933", "#FFFFFF"
+      ];
+
+      const datos = [25, 25, 25, 45, 67];
+      const etiquetas = ["A", "B", "C", "D", "E"];
+
+      const suma = datos.reduce((a,b)=>a+b,0);
+
+      // Título
+      ctx.textAlign = "center";
+      ctx.fillStyle = "#E5E7EB";
+      ctx.font = "600 18px system-ui";
+      ctx.fillText("Distribución de datos", cx, 28);
+
+      let progreso = 0;
+
+      function dibujar() {
+        ctx.clearRect(0, 40, lienzo.width, lienzo.height);
+
+        let cursor = -Math.PI / 2; // empezamos arriba
+
+        const radioExterior = 120;
+        const radioInterior = 70;
+
+        datos.forEach((dato, i) => {
+          const cacho = (dato / suma) * Math.PI * 2;
+          const fin = cursor + cacho * progreso;
+
+          // Sombra
+          ctx.save();
+          ctx.shadowColor = "rgba(0,0,0,0.35)";
+          ctx.shadowBlur = 8;
+
+          // Arco donut
+          ctx.beginPath();
+          ctx.arc(cx, cy, radioExterior, cursor, fin);
+          ctx.arc(cx, cy, radioInterior, fin, cursor, true);
+          ctx.closePath();
+          ctx.fillStyle = colores[i];
+          ctx.fill();
+          ctx.restore();
+
+          // Texto del valor
+          const anguloMedio = cursor + (cacho * progreso) / 2;
+          const rTexto = (radioExterior + radioInterior) / 2;
+
+          ctx.fillStyle = coloresTexto[i];
+          ctx.font = "600 13px system-ui";
+          ctx.fillText(
+            dato,
+            cx + rTexto * Math.cos(anguloMedio),
+            cy + rTexto * Math.sin(anguloMedio)
+          );
+
+          cursor += cacho;
+        });
+
+        // Centro del donut
+        ctx.beginPath();
+        ctx.fillStyle = "#0b1220";
+        ctx.arc(cx, cy, radioInterior - 2, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Texto central
+        ctx.fillStyle = "#E5E7EB";
+        ctx.font = "700 22px system-ui";
+        ctx.fillText(suma, cx, cy + 8);
+        ctx.font = "12px system-ui";
+        ctx.fillText("Total", cx, cy + 28);
+      }
+
+      function animar() {
+        progreso += 0.02;
+        if (progreso > 1) progreso = 1;
+        dibujar();
+        if (progreso < 1) requestAnimationFrame(animar);
+      }
+
+      animar();
+    </script>
+  </body>
+</html>
+
