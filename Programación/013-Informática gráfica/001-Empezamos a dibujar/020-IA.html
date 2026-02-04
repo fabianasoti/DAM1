@@ -1,0 +1,556 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Mini Photoshop - Improved</title>
+<style>
+  body {
+    margin: 0;
+    font-family: system-ui, sans-serif;
+    height: 100vh;
+    display: flex;
+    background: #2b2b2b;
+    color: #eee;
+    overflow: hidden;
+    user-select: none; /* Prevents text highlighting while drawing */
+  }
+
+  #toolbar {
+    width: 240px;
+    background: #1f1f1f;
+    padding: 10px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    border-right: 1px solid #444;
+    z-index: 10;
+  }
+
+  #toolbar h3 {
+    margin: 6px 0 2px;
+    font-size: 13px;
+    color: #aaa;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  button, select, input[type="range"], input[type="color"], label {
+    background: #333;
+    color: #eee;
+    border: 1px solid #555;
+    border-radius: 6px;
+    cursor: pointer;
+    box-sizing: border-box;
+  }
+
+  button:hover {
+    background: #444;
+  }
+
+  button.active {
+    background: #4a7dff;
+    border-color: #4a7dff;
+    color: white;
+  }
+
+  /* Tool buttons grid */
+  #toolsGrid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 6px;
+  }
+
+  .toolBtn {
+    width: 48px;
+    height: 48px;
+    font-size: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+  }
+
+  /* Square color buttons */
+  .colorSquare {
+    width: 100%;
+    height: 40px;
+    padding: 0;
+    border: none;
+  }
+
+  #main {
+    flex: 1;
+    position: relative;
+    background: #555;
+    overflow: hidden;
+    cursor: crosshair;
+  }
+
+  /* Centering container */
+  #centerWrap {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  #viewport {
+    position: relative;
+    transform-origin: 0 0;
+    box-shadow: 0 0 20px rgba(0,0,0,0.5);
+  }
+
+  .layerCanvas {
+    position: absolute;
+    left: 0;
+    top: 0;
+    background: transparent;
+    image-rendering: pixelated; /* Optional: crisp edges */
+  }
+
+  #bgCanvas {
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 0;
+  }
+
+  #layersList {
+    flex: 1;
+    overflow-y: auto;
+    border: 1px solid #333;
+    padding: 4px;
+    background: #252525;
+  }
+
+  #layersList button {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 4px;
+    text-align: left;
+    font-size: 12px;
+  }
+  
+  #layersList button.activeLayer {
+    background: #4a7dff;
+    border: 1px solid #6ba3ff;
+  }
+
+  .wideBtn {
+    width: 100%;
+    padding: 8px;
+  }
+
+  .row {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+  }
+  
+  #sizeLabel {
+    font-size: 12px;
+    color: #fff;
+    width: 30px;
+    text-align: right;
+  }
+</style>
+</head>
+<body>
+
+<div id="toolbar">
+  <h3>Tools</h3>
+  <div id="toolsGrid">
+    <button id="toolBrush" class="toolBtn active" title="Brush">✏️</button>
+    <button id="toolEraser" class="toolBtn" title="Eraser">🧽</button>
+    <button id="toolLine" class="toolBtn" title="Line">📏</button>
+    <button id="toolRect" class="toolBtn" title="Rectangle">⬛</button>
+  </div>
+
+  <h3>Color</h3>
+  <input type="color" id="colorPicker" class="colorSquare" value="#000000">
+
+  <h3>Size</h3>
+  <div class="row">
+    <input type="range" id="sizePicker" min="1" max="100" value="10" style="flex:1">
+    <span id="sizeLabel">10px</span>
+  </div>
+
+  <h3>Background</h3>
+  <div class="row">
+      <input type="color" id="bgColorPicker" class="colorSquare" value="#ffffff" style="width:50px">
+      <label class="wideBtn" style="text-align:center; padding-top:10px;">
+        <input type="checkbox" id="transparentBg"> Transparent
+      </label>
+  </div>
+
+  <h3>History</h3>
+  <div class="row">
+    <button id="undoBtn" class="wideBtn">↩️ Undo</button>
+    <button id="redoBtn" class="wideBtn">↪️ Redo</button>
+  </div>
+
+  <h3>Layers</h3>
+  <div id="layersList"></div>
+  <div class="row">
+      <button id="addLayerBtn" class="wideBtn">➕ New</button>
+      <button id="deleteLayerBtn" class="wideBtn">🗑️ Del</button>
+  </div>
+
+  <h3>File</h3>
+  <button id="saveBtn" class="wideBtn">💾 Save PNG</button>
+</div>
+
+<div id="main">
+  <div id="centerWrap">
+    <div id="viewport"></div>
+  </div>
+</div>
+
+<script>
+  const viewport = document.getElementById("viewport");
+  const main = document.getElementById("main");
+
+  const toolButtons = {
+    brush: document.getElementById("toolBrush"),
+    eraser: document.getElementById("toolEraser"),
+    line: document.getElementById("toolLine"),
+    rect: document.getElementById("toolRect"),
+  };
+
+  const colorPicker = document.getElementById("colorPicker");
+  const sizePicker = document.getElementById("sizePicker");
+  const sizeLabel = document.getElementById("sizeLabel");
+  const undoBtn = document.getElementById("undoBtn");
+  const redoBtn = document.getElementById("redoBtn");
+  const saveBtn = document.getElementById("saveBtn");
+  const addLayerBtn = document.getElementById("addLayerBtn");
+  const deleteLayerBtn = document.getElementById("deleteLayerBtn");
+  const layersList = document.getElementById("layersList");
+
+  const bgColorPicker = document.getElementById("bgColorPicker");
+  const transparentBgCheckbox = document.getElementById("transparentBg");
+
+  // Config
+  const WIDTH = 1024;
+  const HEIGHT = 768;
+
+  let layers = [];
+  let activeLayerIndex = 0;
+
+  // Drawing State
+  let tool = "brush";
+  let isDrawing = false;
+  let startX = 0, startY = 0; // Where we clicked
+  let lastX = 0, lastY = 0;   // Previous frame position (for smooth lines)
+  let snapshot = null;        // To store canvas state for shapes
+
+  // Navigation State
+  let scale = 1;
+  let offsetX = 0;
+  let offsetY = 0;
+  let isPanning = false;
+  let panStart = {x:0, y:0};
+
+  // 1. Setup Background
+  const bgCanvas = document.createElement("canvas");
+  bgCanvas.id = "bgCanvas";
+  bgCanvas.width = WIDTH;
+  bgCanvas.height = HEIGHT;
+  const bgCtx = bgCanvas.getContext("2d");
+  viewport.appendChild(bgCanvas);
+
+  function redrawBackground() {
+    bgCtx.clearRect(0,0,WIDTH,HEIGHT);
+    if (!transparentBgCheckbox.checked) {
+      bgCtx.fillStyle = bgColorPicker.value;
+      bgCtx.fillRect(0,0,WIDTH,HEIGHT);
+    }
+  }
+
+  bgColorPicker.oninput = redrawBackground;
+  transparentBgCheckbox.onchange = redrawBackground;
+
+  // 2. Tool Management
+  function setTool(t) {
+    tool = t;
+    for (let k in toolButtons) toolButtons[k].classList.remove("active");
+    toolButtons[t].classList.add("active");
+  }
+
+  Object.keys(toolButtons).forEach(k => {
+    toolButtons[k].onclick = () => setTool(k);
+  });
+
+  sizePicker.oninput = () => {
+    sizeLabel.textContent = sizePicker.value + "px";
+  };
+
+  // 3. Layer System
+  function createLayer(name) {
+    const canvas = document.createElement("canvas");
+    canvas.width = WIDTH;
+    canvas.height = HEIGHT;
+    canvas.className = "layerCanvas";
+    viewport.appendChild(canvas);
+
+    const ctx = canvas.getContext("2d");
+    // Default styles for smoother drawing
+    ctx.lineCap = "round";
+    ctx.lineJoin = "round";
+
+    const layer = {
+      name,
+      canvas,
+      ctx,
+      history: [],
+      redo: []
+    };
+
+    layers.push(layer);
+    activeLayerIndex = layers.length - 1;
+    pushHistory();
+    refreshLayersUI();
+  }
+
+  function deleteActiveLayer() {
+    if (layers.length <= 1) {
+      alert("You must have at least one layer.");
+      return;
+    }
+    const layer = layers[activeLayerIndex];
+    viewport.removeChild(layer.canvas);
+    layers.splice(activeLayerIndex, 1);
+    activeLayerIndex = Math.max(0, activeLayerIndex - 1);
+    refreshLayersUI();
+  }
+
+  deleteLayerBtn.onclick = deleteActiveLayer;
+
+  function refreshLayersUI() {
+    layersList.innerHTML = "";
+    // Show layers in reverse order (top layer first in list)
+    [...layers].reverse().forEach((layer) => {
+      // Find original index
+      const realIndex = layers.indexOf(layer);
+      
+      const btn = document.createElement("button");
+      btn.textContent = layer.name;
+      if (realIndex === activeLayerIndex) btn.classList.add("activeLayer");
+      
+      btn.onclick = () => {
+        activeLayerIndex = realIndex;
+        refreshLayersUI();
+      };
+      layersList.appendChild(btn);
+    });
+  }
+
+  function activeLayer() {
+    return layers[activeLayerIndex];
+  }
+
+  // 4. History System
+  function pushHistory() {
+    const layer = activeLayer();
+    layer.history.push(layer.canvas.toDataURL());
+    if (layer.history.length > 20) layer.history.shift();
+    layer.redo = [];
+  }
+
+  function restoreState(dataUrl, layer) {
+    const img = new Image();
+    img.onload = () => {
+      layer.ctx.clearRect(0, 0, WIDTH, HEIGHT);
+      layer.ctx.drawImage(img, 0, 0);
+    };
+    img.src = dataUrl;
+  }
+
+  undoBtn.onclick = () => {
+    const layer = activeLayer();
+    if (layer.history.length > 1) {
+      const currentstate = layer.history.pop();
+      layer.redo.push(currentstate);
+      restoreState(layer.history[layer.history.length - 1], layer);
+    }
+  };
+
+  redoBtn.onclick = () => {
+    const layer = activeLayer();
+    if (layer.redo.length > 0) {
+      const nextState = layer.redo.pop();
+      layer.history.push(nextState);
+      restoreState(nextState, layer);
+    }
+  };
+
+  // 5. Input & Drawing Logic
+  function getMousePos(e) {
+    const rect = viewport.getBoundingClientRect();
+    // Logic to handle scale AND transform origin
+    return {
+      x: (e.clientX - rect.left) / scale,
+      y: (e.clientY - rect.top) / scale
+    };
+  }
+
+  main.addEventListener("mousedown", (e) => {
+    // Middle click or Space+Click to Pan
+    if (e.button === 1 || e.shiftKey) {
+      isPanning = true;
+      panStart.x = e.clientX;
+      panStart.y = e.clientY;
+      e.preventDefault();
+      return;
+    }
+
+    if (e.button !== 0) return; // Only Left Click draws
+
+    isDrawing = true;
+    const pos = getMousePos(e);
+    startX = pos.x;
+    startY = pos.y;
+    lastX = pos.x;
+    lastY = pos.y;
+
+    const layer = activeLayer();
+    const ctx = layer.ctx;
+
+    // Prepare context based on tool
+    ctx.lineWidth = parseInt(sizePicker.value, 10);
+    ctx.strokeStyle = colorPicker.value;
+    ctx.fillStyle = colorPicker.value;
+    
+    if (tool === "eraser") {
+      ctx.globalCompositeOperation = "destination-out";
+    } else {
+      ctx.globalCompositeOperation = "source-over";
+    }
+
+    // For Shapes: Save what the canvas looks like BEFORE we start dragging
+    if (tool === "line" || tool === "rect") {
+      snapshot = ctx.getImageData(0, 0, WIDTH, HEIGHT);
+    } 
+    // For Brush: Draw a single dot in case they just click
+    else if (tool === "brush" || tool === "eraser") {
+        ctx.beginPath();
+        ctx.arc(startX, startY, ctx.lineWidth / 2, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.beginPath(); // Reset path for the stroke to follow
+        ctx.moveTo(startX, startY);
+    }
+  });
+
+  main.addEventListener("mousemove", (e) => {
+    // Panning Logic
+    if (isPanning) {
+      offsetX += e.clientX - panStart.x;
+      offsetY += e.clientY - panStart.y;
+      panStart.x = e.clientX;
+      panStart.y = e.clientY;
+      updateTransform();
+      return;
+    }
+
+    if (!isDrawing) return;
+
+    const layer = activeLayer();
+    const ctx = layer.ctx;
+    const pos = getMousePos(e);
+
+    if (tool === "brush" || tool === "eraser") {
+      // Smooth continuous line
+      ctx.lineTo(pos.x, pos.y);
+      ctx.stroke();
+      
+      // Update last position for next frame (critical for some algorithms, less for native stroke)
+      lastX = pos.x;
+      lastY = pos.y;
+    } 
+    else if (tool === "line") {
+      // Restore the "clean" canvas, then draw the new line
+      ctx.putImageData(snapshot, 0, 0);
+      ctx.beginPath();
+      ctx.moveTo(startX, startY);
+      ctx.lineTo(pos.x, pos.y);
+      ctx.stroke();
+    } 
+    else if (tool === "rect") {
+      // Restore clean canvas, then draw new rect
+      ctx.putImageData(snapshot, 0, 0);
+      const w = pos.x - startX;
+      const h = pos.y - startY;
+      
+      // We fill or stroke? Let's fill for now, or stroke based on preference
+      // Let's do a filled rect
+      ctx.fillRect(startX, startY, w, h);
+    }
+  });
+
+  window.addEventListener("mouseup", () => {
+    if (isDrawing) {
+      pushHistory(); // Save state after stroke/shape is done
+    }
+    isDrawing = false;
+    isPanning = false;
+  });
+
+  // Zoom
+  main.addEventListener("wheel", (e) => {
+    e.preventDefault();
+    const zoomSensitivity = 0.1;
+    const delta = e.deltaY > 0 ? -zoomSensitivity : zoomSensitivity;
+    const newScale = Math.max(0.1, scale + delta);
+    
+    scale = newScale;
+    updateTransform();
+  });
+
+  function updateTransform() {
+    viewport.style.transform = `translate(${offsetX}px, ${offsetY}px) scale(${scale})`;
+  }
+
+  // 6. Global Buttons
+  addLayerBtn.onclick = () => {
+    createLayer("Layer " + (layers.length + 1));
+  };
+
+  saveBtn.onclick = () => {
+    const exportCanvas = document.createElement("canvas");
+    exportCanvas.width = WIDTH;
+    exportCanvas.height = HEIGHT;
+    const ectx = exportCanvas.getContext("2d");
+
+    if (!transparentBgCheckbox.checked) {
+      ectx.fillStyle = bgColorPicker.value;
+      ectx.fillRect(0,0,WIDTH,HEIGHT);
+    }
+
+    layers.forEach(layer => {
+      ectx.drawImage(layer.canvas, 0, 0);
+    });
+
+    const link = document.createElement("a");
+    link.download = "drawing_" + Date.now() + ".png";
+    link.href = exportCanvas.toDataURL("image/png");
+    link.click();
+  };
+
+  // Initialization
+  viewport.style.width = WIDTH + "px";
+  viewport.style.height = HEIGHT + "px";
+  
+  // Create first layer
+  redrawBackground();
+  createLayer("Layer 1");
+  
+  // Center the canvas initially
+  const mainRect = main.getBoundingClientRect();
+  scale = 0.8;
+  updateTransform();
+
+</script>
+
+</body>
+</html>
