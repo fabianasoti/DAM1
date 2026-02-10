@@ -1,0 +1,197 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Farm Game</title>
+</head>
+<body>
+
+<canvas></canvas>
+
+<script>
+/* =========================
+   1. INITIAL CONDITIONS
+========================= */
+const canvas = document.querySelector("canvas");
+const ctx = canvas.getContext("2d");
+
+canvas.width = 512;
+canvas.height = 512;
+
+const NPC_COUNT = 50;
+const npcs = [];
+
+/* =========================
+   GRASS BACKGROUND
+========================= */
+const TILE_SIZE = 32;
+const COLS = canvas.width / TILE_SIZE;
+const ROWS = canvas.height / TILE_SIZE;
+
+const grass = [];
+
+for (let y = 0; y < ROWS; y++) {
+  grass[y] = [];
+  for (let x = 0; x < COLS; x++) {
+    grass[y][x] = Math.random() > 0.5 ? "#6dbf4b" : "#63b142";
+  }
+}
+
+function drawGrass() {
+  for (let y = 0; y < ROWS; y++) {
+    for (let x = 0; x < COLS; x++) {
+      ctx.fillStyle = grass[y][x];
+      ctx.fillRect(
+        x * TILE_SIZE,
+        y * TILE_SIZE,
+        TILE_SIZE,
+        TILE_SIZE
+      );
+    }
+  }
+}
+
+/* =========================
+   NPC CLASS
+========================= */
+class Npc {
+  constructor() {
+    this.x = Math.random() * canvas.width;
+    this.y = Math.random() * canvas.height;
+    this.radius = 6 + Math.random() * 6;
+
+    this.angle = Math.random() * Math.PI * 2;
+    this.baseSpeed = 0.5 + Math.random() * 1.5;
+    this.speed = this.baseSpeed;
+
+    this.color = {
+      r: Math.floor(Math.random() * 255),
+      g: Math.floor(Math.random() * 255),
+      b: Math.floor(Math.random() * 255)
+    };
+
+    /* =========================
+       NEW ATTRIBUTES
+    ========================= */
+
+    // 1. AGE (in days)
+    this.age = Math.floor(Math.random() * 100);
+
+    // 2. GENDER
+    this.gender = Math.random() > 0.5 ? "male" : "female";
+
+    // 3. HUNGER (0 = full, 100 = starving)
+    this.hunger = Math.random() * 50;
+  }
+
+  updateNeeds() {
+    // Age slowly increases
+    this.age += 0.001;
+
+    // Hunger increases over time
+    this.hunger += 0.02;
+    if (this.hunger > 100) this.hunger = 100;
+
+    // Hunger affects speed
+    if (this.hunger > 70) {
+      this.speed = this.baseSpeed * 0.5;
+    } else {
+      this.speed = this.baseSpeed;
+    }
+  }
+
+  move() {
+    this.updateNeeds();
+
+    this.x += Math.cos(this.angle) * this.speed;
+    this.y += Math.sin(this.angle) * this.speed;
+
+    if (this.x < this.radius || this.x > canvas.width - this.radius) {
+      this.angle = Math.PI - this.angle;
+    }
+
+    if (this.y < this.radius || this.y > canvas.height - this.radius) {
+      this.angle = -this.angle;
+    }
+  }
+
+  draw() {
+    // Hunger visual effect (more red when hungry)
+    const hungerTint = Math.min(this.hunger * 2, 100);
+
+    ctx.beginPath();
+    ctx.fillStyle = `rgb(
+      ${this.color.r + hungerTint},
+      ${this.color.g - hungerTint / 2},
+      ${this.color.b - hungerTint / 2}
+    )`;
+    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+    ctx.fill();
+  }
+}
+
+/* =========================
+   INIT FUNCTION
+========================= */
+function init() {
+  for (let i = 0; i < NPC_COUNT; i++) {
+    npcs.push(new Npc());
+  }
+}
+
+/* =========================
+   AVOID COLLISIONS
+========================= */
+function avoidCollisions() {
+  for (let i = 0; i < npcs.length; i++) {
+    for (let j = i + 1; j < npcs.length; j++) {
+      const a = npcs[i];
+      const b = npcs[j];
+
+      const dx = a.x - b.x;
+      const dy = a.y - b.y;
+      const distance = Math.sqrt(dx * dx + dy * dy);
+      const minDist = a.radius + b.radius;
+
+      if (distance < minDist) {
+        const angle = Math.atan2(dy, dx);
+        const overlap = minDist - distance;
+
+        a.x += Math.cos(angle) * overlap / 2;
+        a.y += Math.sin(angle) * overlap / 2;
+        b.x -= Math.cos(angle) * overlap / 2;
+        b.y -= Math.sin(angle) * overlap / 2;
+
+        a.angle += Math.random() - 0.5;
+        b.angle += Math.random() - 0.5;
+      }
+    }
+  }
+}
+
+/* =========================
+   GAME LOOP
+========================= */
+function loop() {
+  drawGrass();
+
+  avoidCollisions();
+
+  for (const npc of npcs) {
+    npc.move();
+    npc.draw();
+  }
+
+  requestAnimationFrame(loop);
+}
+
+/* =========================
+   START GAME
+========================= */
+init();
+loop();
+</script>
+
+</body>
+</html>
+

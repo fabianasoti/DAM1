@@ -1,0 +1,139 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Farm Game</title>
+</head>
+<body>
+
+<canvas></canvas>
+
+<script>
+/* =========================
+   1. INITIAL CONDITIONS
+========================= */
+const canvas = document.querySelector("canvas");
+const ctx = canvas.getContext("2d");
+
+canvas.width = 512;
+canvas.height = 512;
+
+const NPC_COUNT = 50;
+const npcs = [];
+
+/* =========================
+   NPC CLASS
+========================= */
+class Npc {
+  constructor() {
+    this.x = Math.random() * canvas.width;
+    this.y = Math.random() * canvas.height;
+    this.radius = 6 + Math.random() * 6;
+
+    // 4. ANGLE AND SPEED
+    this.angle = Math.random() * Math.PI * 2;
+    this.speed = 0.5 + Math.random() * 1.5;
+
+    // 7. COLOR
+    this.color = `rgb(
+      ${Math.floor(Math.random() * 255)},
+      ${Math.floor(Math.random() * 255)},
+      ${Math.floor(Math.random() * 255)}
+    )`;
+  }
+
+  /* =========================
+     MOVE + BORDER COLLISION
+  ========================= */
+  move() {
+    this.x += Math.cos(this.angle) * this.speed;
+    this.y += Math.sin(this.angle) * this.speed;
+
+    // 6. COLLIDE WITH BORDERS
+    if (this.x < this.radius || this.x > canvas.width - this.radius) {
+      this.angle = Math.PI - this.angle;
+    }
+
+    if (this.y < this.radius || this.y > canvas.height - this.radius) {
+      this.angle = -this.angle;
+    }
+  }
+
+  /* =========================
+     DRAW NPC
+  ========================= */
+  draw() {
+    ctx.beginPath();
+    ctx.fillStyle = this.color;
+    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+    ctx.fill();
+  }
+}
+
+/* =========================
+   2. INIT FUNCTION
+========================= */
+function init() {
+  for (let i = 0; i < NPC_COUNT; i++) {
+    npcs.push(new Npc());
+  }
+}
+
+/* =========================
+   5. AVOID EACH OTHER
+========================= */
+function avoidCollisions() {
+  for (let i = 0; i < npcs.length; i++) {
+    for (let j = i + 1; j < npcs.length; j++) {
+      const a = npcs[i];
+      const b = npcs[j];
+
+      const dx = a.x - b.x;
+      const dy = a.y - b.y;
+      const distance = Math.sqrt(dx * dx + dy * dy);
+      const minDist = a.radius + b.radius;
+
+      if (distance < minDist) {
+        // Simple separation
+        const angle = Math.atan2(dy, dx);
+        const overlap = minDist - distance;
+
+        a.x += Math.cos(angle) * overlap / 2;
+        a.y += Math.sin(angle) * overlap / 2;
+        b.x -= Math.cos(angle) * overlap / 2;
+        b.y -= Math.sin(angle) * overlap / 2;
+
+        // Change direction slightly
+        a.angle += Math.random() - 0.5;
+        b.angle += Math.random() - 0.5;
+      }
+    }
+  }
+}
+
+/* =========================
+   3. LOOP FUNCTION
+========================= */
+function loop() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  avoidCollisions();
+
+  for (const npc of npcs) {
+    npc.move();
+    npc.draw();
+  }
+
+  requestAnimationFrame(loop);
+}
+
+/* =========================
+   START GAME
+========================= */
+init();
+loop();
+</script>
+
+</body>
+</html>
+
