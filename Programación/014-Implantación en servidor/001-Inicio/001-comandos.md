@@ -15,5 +15,4 @@ sudo shutdown = Apagar el equipo
 Me voy al equipo de desarrollo (vuestro equipo)
 Saco una terminal
 ssh fabiana@10.0.2.15
-
-
+p
