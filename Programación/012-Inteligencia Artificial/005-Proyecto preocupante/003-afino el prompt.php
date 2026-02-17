@@ -4,7 +4,7 @@
 // sudo service apache2 restart
 
 $OLLAMA_URL = "http://localhost:11434/api/generate";
-$MODEL = "qwen2.5-coder:7b";
+$MODEL = "qwen2.5:3b-instruct";
 
 $prompt = "
   Dame el codigo HTML y CSS de una web personal. 
