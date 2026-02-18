@@ -1,0 +1,66 @@
+{"question":"¿Qué sistema operativo utiliza para programar?","answer":"Windows y Linux."}
+{"question":"¿Qué base de datos ha utilizado?","answer":"MySQL."}
+{"question":"¿Prefiere trabajar en equipo o sola?","answer":"En equipo, pero también se adapta al trabajo individual."}
+{"question":"¿Cómo organiza sus tareas académicas y personales?","answer":"Usando listas de tareas y planificación semanal."}
+{"question":"¿Usa metodologías ágiles?","answer":"Está aprendiendo sobre Scrum y metodologías ágiles."}
+{"question":"¿Qué framework frontend le gustaría aprender?","answer":"React."}
+{"question":"¿Qué framework backend le gustaría aprender?","answer":"Laravel."}
+{"question":"¿Ha trabajado con APIs?","answer":"Sí, ha consumido APIs en proyectos académicos."}
+{"question":"¿Qué tipo de APIs ha utilizado?","answer":"APIs REST."}
+{"question":"¿Sabe qué es REST?","answer":"Sí, es un estilo de arquitectura para diseñar servicios web."}
+{"question":"¿Qué significa UX?","answer":"Experiencia de usuario."}
+{"question":"¿Qué significa UI?","answer":"Interfaz de usuario."}
+{"question":"¿Le interesa el diseño responsivo?","answer":"Sí, considera que es fundamental."}
+{"question":"¿Sabe usar Bootstrap?","answer":"Sí, a nivel básico."}
+{"question":"¿Ha usado PostgreSQL?","answer":"Está empezando a aprenderlo."}
+{"question":"¿Ha usado SQLite?","answer":"Sí, en proyectos pequeños."}
+{"question":"¿Sabe qué es la normalización en bases de datos?","answer":"Sí, es el proceso de organizar datos para evitar redundancias."}
+{"question":"¿Qué nivel de inglés tiene?","answer":"Nivel intermedio."}
+{"question":"¿Le gustaría trabajar de forma remota?","answer":"Sí, le interesa el trabajo remoto."}
+{"question":"¿Qué tipo de empresa le gustaría integrar?","answer":"Una empresa tecnológica innovadora."}
+{"question":"¿Prefiere startups o grandes empresas?","answer":"Le atraen las startups por su dinamismo."}
+{"question":"¿Qué la motiva a programar?","answer":"Resolver problemas y crear soluciones útiles."}
+{"question":"¿Qué hace cuando su código falla?","answer":"Revisa paso a paso, usa depuración y busca documentación."}
+{"question":"¿Usa control de versiones en proyectos personales?","answer":"Sí, utiliza Git."}
+{"question":"¿Sabe trabajar con ramas (branches)?","answer":"Sí, para organizar cambios en sus proyectos."}
+{"question":"¿Qué significa commit?","answer":"Es el registro de cambios en un repositorio."}
+{"question":"¿Qué significa merge?","answer":"Es la combinación de ramas en un repositorio."}
+{"question":"¿Ha desplegado alguna aplicación?","answer":"Aún no en producción, pero lo está aprendiendo."}
+{"question":"¿Dónde le gustaría desplegar sus aplicaciones?","answer":"En servidores cloud."}
+{"question":"¿Sabe qué es la computación en la nube?","answer":"Sí, es el uso de servidores remotos para almacenar y procesar datos."}
+{"question":"¿Qué proveedor cloud le interesa aprender?","answer":"AWS."}
+{"question":"¿Le gustaría obtener certificaciones tecnológicas?","answer":"Sí."}
+{"question":"¿Qué certificación le gustaría obtener primero?","answer":"Una certificación en bases de datos o cloud."}
+{"question":"¿Cuántas horas estudia al día?","answer":"Entre 2 y 4 horas."}
+{"question":"¿Cómo equilibra trabajo y estudio?","answer":"Con organización y disciplina."}
+{"question":"¿Qué la inspira a seguir aprendiendo?","answer":"Su meta profesional a largo plazo."}
+{"question":"¿Tiene mentor en el área tecnológica?","answer":"No actualmente, pero le gustaría tener uno."}
+{"question":"¿Participa en comunidades tecnológicas?","answer":"Sigue comunidades online."}
+{"question":"¿Le gustaría asistir a hackathones?","answer":"Sí, para ganar experiencia."}
+{"question":"¿Qué tipo de problemas disfruta resolver?","answer":"Problemas lógicos y de organización de datos."}
+{"question":"¿Le gustan los algoritmos?","answer":"Sí, especialmente cuando implican lógica estructurada."}
+{"question":"¿Qué estructura de datos le interesa más?","answer":"Listas y bases de datos relacionales."}
+{"question":"¿Sabe qué es la programación orientada a objetos?","answer":"Sí."}
+{"question":"¿Qué significa POO?","answer":"Programación Orientada a Objetos."}
+{"question":"¿Ha trabajado con herencia en programación?","answer":"Sí, en ejercicios académicos."}
+{"question":"¿Qué patrón de diseño le interesa aprender?","answer":"MVC."}
+{"question":"¿Le gustaría crear su propia startup tecnológica?","answer":"Sí, en el futuro."}
+{"question":"¿Qué valores busca en un equipo de trabajo?","answer":"Responsabilidad y colaboración."}
+{"question":"¿Cómo maneja la presión laboral?","answer":"Con organización y enfoque."}
+{"question":"¿Qué aprendizaje obtuvo del proyecto Lumina?","answer":"Planificación y estructuración de una aplicación desde cero."}
+{"question":"¿Qué desafío enfrentó en Lumina?","answer":"Organizar correctamente la base de datos."}
+{"question":"¿Qué espera lograr con su app financiera?","answer":"Ayudar a las personas a organizar mejor sus gastos."}
+{"question":"¿Qué característica extra añadiría a su app financiera?","answer":"Gráficos estadísticos y reportes mensuales."}
+{"question":"¿Le interesa la ciberseguridad?","answer":"Sí, como complemento al backend."}
+{"question":"¿Qué es lo más importante en una base de datos?","answer":"La integridad y organización de los datos."}
+{"question":"¿Prefiere backend o frontend?","answer":"Le gustan ambos, pero siente mayor afinidad por bases de datos."}
+{"question":"¿Se considera autodidacta?","answer":"Sí."}
+{"question":"¿Qué libro técnico le gustaría leer?","answer":"Uno sobre arquitectura de software."}
+{"question":"¿Qué tipo de música escucha?","answer":"Pop y música latina."}
+{"question":"¿Practica algún deporte?","answer":"No de forma constante."}
+{"question":"¿Tiene mascotas?","answer":"No actualmente."}
+{"question":"¿Qué significa para ella la resiliencia?","answer":"Seguir adelante a pesar de las dificultades."}
+{"question":"¿Qué significa para ella la constancia?","answer":"Trabajar de forma continua para alcanzar metas."}
+{"question":"¿Dónde se ve en cinco años?","answer":"Trabajando como desarrolladora en el sector tecnológico."}
+{"question":"¿Dónde se ve en diez años?","answer":"Liderando proyectos tecnológicos y gestionando sistemas empresariales."}
+
