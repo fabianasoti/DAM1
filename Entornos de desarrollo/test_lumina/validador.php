@@ -3,15 +3,15 @@ function validarEntradas($credencial, $pass) {
     $credencial = trim($credencial); [cite: 307]
     
     // Validación de campos vacíos
-    if (empty($credencial) || empty($pass)) { [cite: 309]
-        return "vacios";
+    if (empty($nombre) || empty($email) || empty($pass)) {
+        header("Location: login.php?error=vacios");
+        exit();
     }
-    
-    // Validación de longitud (Sugerencia del profe)
-    if (strlen($pass) < 6) {
-        return "longitud_corta";
+
+    // Validar requisitos de contraseña (Regex)
+    $patron = '/^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>]).{8,}$/';
+    if (!preg_match($patron, $pass)) {
+        header("Location: login.php?error=password_debil");
+        exit();
     }
-    
-    return "ok";
-}
 ?>
