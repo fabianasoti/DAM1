@@ -1,0 +1,12 @@
+{
+    "name": "lumina/pruebas-cb",
+    "description": "Pruebas de caja blanca para Lumina",
+    "require-dev": {
+        "phpunit/phpunit": "^10.0"
+    },
+    "autoload": {
+        "classmap": [
+            "./"
+        ]
+    }
+}

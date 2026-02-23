@@ -1,18 +1,29 @@
 <?php
-date_default_timezone_set('Europe/Madrid');
+class BaseDatos {
+    private $conexion;
 
-$host = "localhost";
-$user = "diarioemocional";
-$pass = "Diarioemocional123$"; 
-$db   = "diarioemocional";
+    public function __construct($conexion) {
+        $this->conexion = $conexion;
+    }
 
-mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+    // Busca al usuario por email o nombre
+    public function obtenerUsuarioPorCredencial($credencial) {
+        $sql = "SELECT id, nombre, password, rol FROM usuarios WHERE email = ? OR nombre = ? LIMIT 1";
+        $stmt = $this->conexion->prepare($sql);
+        
+        if (!$stmt) {
+            return false; // Error en la consulta
+        }
 
-try {
-    $conexion = new mysqli($host, $user, $pass, $db);
-    $conexion->set_charset("utf8mb4");
-    $conexion->query("SET time_zone = '+01:00'");
-} catch (mysqli_sql_exception $e) {
-    die("Error de conexión: " . $e->getMessage());
+        $stmt->bind_param("ss", $credencial, $credencial);
+        $stmt->execute();
+        $res = $stmt->get_result();
+
+        if ($fila = $res->fetch_assoc()) {
+            return $fila; // Devuelve los datos si existe
+        }
+        
+        return null; // No se encontró el usuario
+    }
 }
 ?>

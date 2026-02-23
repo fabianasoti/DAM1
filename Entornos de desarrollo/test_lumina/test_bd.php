@@ -1,16 +1,31 @@
 <?php
+use PHPUnit\Framework\TestCase;
+
 require_once 'bd.php';
-echo "<h3>Pruebas Unitarias: Base de Datos</h3>";
 
-// (Aquí incluirías el código de preparación del entorno con el usuario_test que ya escribiste)
-// [cite: 203-208]
+// Cambiamos el nombre de la clase a test_bd
+class test_bd extends TestCase {
+    public function testObtenerUsuarioPorCredencial() {
+        $mockResult = $this->createMock(mysqli_result::class);
+        $mockResult->method('fetch_assoc')->willReturn([
+            'id' => 1,
+            'nombre' => 'TestUser',
+            'password' => 'hash_inventado',
+            'rol' => 'user'
+        ]);
 
-$resultado = autenticarUsuario($conexion, "test@lumina.com", "123456"); [cite: 216]
-echo "Test Login Correcto: " . (is_array($resultado) ? "PASÓ" : "FALLÓ") . "<br>";
+        $mockStmt = $this->createMock(mysqli_stmt::class);
+        $mockStmt->method('execute')->willReturn(true);
+        $mockStmt->method('get_result')->willReturn($mockResult);
 
-$resultado = autenticarUsuario($conexion, "noexiste@lumina.com", "123456"); [cite: 223]
-echo "Test Usuario Inexistente: " . ($resultado === "usuario_no_existe" ? "PASÓ" : "FALLÓ") . "<br>";
+        $mockConexion = $this->createMock(mysqli::class);
+        $mockConexion->method('prepare')->willReturn($mockStmt);
 
-// (Limpieza del entorno al finalizar)
-// [cite: 244-246]
+        $bd = new BaseDatos($mockConexion);
+        $resultado = $bd->obtenerUsuarioPorCredencial("test@lumina.com");
+
+        $this->assertEquals(1, $resultado['id']);
+        $this->assertEquals('TestUser', $resultado['nombre']);
+    }
+}
 ?>

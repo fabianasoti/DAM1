@@ -1,17 +1,18 @@
 <?php
-function validarEntradas($credencial, $pass) {
-    $credencial = trim($credencial); [cite: 307]
-    
-    // Validación de campos vacíos
-    if (empty($nombre) || empty($email) || empty($pass)) {
-        header("Location: login.php?error=vacios");
-        exit();
+class Validador {
+    // Valida que los campos no estén vacíos (basado en tu login.php)
+    public function validarCamposLlenos($credencial, $pass) {
+        $credencialLimpia = trim($credencial);
+        if (empty($credencialLimpia) || empty($pass)) {
+            return false;
+        }
+        return true;
     }
 
-    // Validar requisitos de contraseña (Regex)
-    $patron = '/^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>]).{8,}$/';
-    if (!preg_match($patron, $pass)) {
-        header("Location: login.php?error=password_debil");
-        exit();
+    // He añadido esta validación extra (basada en tu registro) 
+    // para que tengas algo más interesante que testear en caja blanca
+    public function validarLongitudPassword($pass) {
+        return strlen($pass) >= 8;
     }
+}
 ?>

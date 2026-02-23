@@ -1,30 +1,28 @@
 <?php
+use PHPUnit\Framework\TestCase;
+
 require_once 'validador.php';
 
-echo "<h3>Pruebas Unitarias: Validador</h3>";
-// Camino: Campos vacíos
-echo "Test Vacíos: " . (validarEntradas("", "") === "vacios" ? "PASÓ" : "FALLÓ") . "<br>";
-// Camino: Longitud corta
-echo "Test Longitud: " . (validarEntradas("user", "123") === "longitud_corta" ? "PASÓ" : "FALLÓ") . "<br>";
-// Camino: Todo OK
-echo "Test OK: " . (validarEntradas("user", "123456") === "ok" ? "PASÓ" : "FALLÓ") . "<br>";
-?>
+// Cambiamos el nombre de la clase para que coincida EXACTAMENTE con el archivo
+class test_validador extends TestCase {
+    private $validador;
 
-<?php
-function validarEntradas($credencial, $pass) {
-    $credencial = trim($credencial); [cite: 307]
-    
-    // Validación de campos vacíos
-    if (empty($credencial) || empty($pass)) { [cite: 309]
-        return "vacios";
+    protected function setUp(): void {
+        $this->validador = new Validador();
     }
-    
-    // Validación de longitud (Sugerencia del profe)
-    if (strlen($pass) < 6) {
-        return "longitud_corta";
+
+    public function testValidarCamposLlenosFallaConVacios() {
+        $this->assertFalse($this->validador->validarCamposLlenos("", ""));
+        $this->assertFalse($this->validador->validarCamposLlenos("usuario", ""));
     }
-    
-    return "ok";
+
+    public function testValidarCamposLlenosExitoso() {
+        $this->assertTrue($this->validador->validarCamposLlenos("admin@lumina.com", "12345678"));
+    }
+
+    public function testValidarLongitudPassword() {
+        $this->assertFalse($this->validador->validarLongitudPassword("corta"));
+        $this->assertTrue($this->validador->validarLongitudPassword("passwordFuerte123"));
+    }
 }
 ?>
-
