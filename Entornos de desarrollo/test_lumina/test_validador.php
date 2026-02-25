@@ -14,6 +14,7 @@ class test_validador extends TestCase {
     public function testValidarCamposLlenosFallaConVacios() {
         $this->assertFalse($this->validador->validarCamposLlenos("", ""));
         $this->assertFalse($this->validador->validarCamposLlenos("usuario", ""));
+        $this->assertFalse($this->validador->validarCamposLlenos("", "usuario"));
     }
 
     public function testValidarCamposLlenosExitoso() {
