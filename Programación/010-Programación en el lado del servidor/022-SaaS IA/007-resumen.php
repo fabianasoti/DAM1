@@ -128,6 +128,7 @@ Instrucciones:
 - Máximo 3-5 frases.
 - No inventes datos que no estén en la muestra.
 - Si detectas patrones obvios (p.ej. misma población repetida, rangos de fechas), menciónalos con cautela.
+- Analiza y comenta brevemente en manera de resumen la respuesta que dé SQL.
 ";
 
     $r = llamarOllama($ollamaUrl, $model, $prompt, 120);
